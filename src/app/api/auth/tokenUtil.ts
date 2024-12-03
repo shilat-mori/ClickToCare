@@ -47,4 +47,3 @@ export function requireRole(requiredRole: UserRole) {
     return NextResponse.next();
   };
 }
-

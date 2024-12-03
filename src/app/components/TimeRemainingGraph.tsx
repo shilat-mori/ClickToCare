@@ -24,9 +24,6 @@ const TimeTracker: React.FC<TimeTrackerProps> = ({ totalTime, endTime }) => {
     return () => clearInterval(interval);
   }, [endTime]);
 
-  const percentage = Math.max((timeRemaining / totalTime) * 100, 0);
-
-  // Determine color based on percentage
   const getColor = () => {
     // if (timeRemaining <= 3 * 60 * 60) return "red";
     // if (timeRemaining <= 24 * 60 * 60) return "orange";
@@ -34,6 +31,8 @@ const TimeTracker: React.FC<TimeTrackerProps> = ({ totalTime, endTime }) => {
     if (timeRemaining <= 2 * 60) return "orange";
     return "green";
   };
+
+  const percentage = Math.max((timeRemaining / totalTime) * 100, 0);
 
   return (
     <div style={{ width: 100, height: 100 }}>
