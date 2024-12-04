@@ -1,16 +1,16 @@
 "use client"
 import React from 'react';
-import Countdown from 'react-countdown';
-import TimeTracker from './components/TimeRemainingGraph';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
-  const totalTime = 2.5 * 60; // Total time in seconds
-  const endTime = new Date().getTime() + totalTime * 1000; // Current time + totalTime, in milliseconds
+  //for the routing here there is no need for checking, since everyone can acceess those pages
+  const router = useRouter();
+  const buttonStyle = "bg-red-500 text-white p-2 rounded";
   return (
-   <div>
-    <h1>Count Down Timer:</h1>
-    <TimeTracker totalTime={totalTime} endTime={endTime} />
-    <Countdown date={Date.now() + totalTime * 1000} />
-   </div>
+    <div>
+      <h1>אמץ משימה</h1>
+      <button onClick={() => router.push('/pages/login')} className={buttonStyle}>Log In</button>
+      <button onClick={() => router.push('/pages/signup')} className={buttonStyle}>Sign Up</button>
+    </div>
   )
 }

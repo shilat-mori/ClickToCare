@@ -48,6 +48,7 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
     <html lang="en">
       <body>
         <header>
+          <button onClick={() => router.push('/')}>Home</button>
           <h1>Welcome to the App</h1>
           {role && (
             <div>
