@@ -8,13 +8,13 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState("");
-  
+
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/users', {username, email, password});
+      const response = await axios.post('/api/users', { username, email, password });
       if (response.data.error) {
         setMessage(response.data.error);
       }

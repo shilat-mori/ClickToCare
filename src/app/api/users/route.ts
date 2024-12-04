@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import connect from "@/app/lib/db/mongodb";
 import User from "@/app/lib/models/userSchema";
-import jwt from "jsonwebtoken";
+import { generateToken } from "../auth/tokenUtil";
 import { UserRole } from "@/app/types/userRole";
+import bcrypt from 'bcryptjs';
 
 const secret = process.env.SECRET_KEY || 'your-secret-key';
 
@@ -18,15 +19,12 @@ export async function POST(req: NextRequest) {
         if (existingUser) {
             return NextResponse.json({ error: "Email already exists" }, { status: 409 });
         }
+        const hashedPassword = await bcrypt.hash(password, 10);
         //create the new user and save to database
-        const newUser = new User({ username, password, email, role: UserRole.unauthorized });
+        const newUser = new User({ username, password: hashedPassword, email, role: UserRole.unauthorized });
         await newUser.save();
         //generate a token - unauthorized, since we just signed up
-        const token = jwt.sign(
-            { id: newUser._id, role: "unauthorized" },
-            secret,
-            { expiresIn: "1h" } // Token expiration time
-        );
+        const token = generateToken(newUser._id, UserRole.unauthorized);
         // Set the token in a cookie
         const response = NextResponse.json({ message: "User created successfully", user: newUser });
         response.cookies.set("token", token, {
@@ -34,7 +32,7 @@ export async function POST(req: NextRequest) {
             sameSite: 'lax', // Allows cookies on same-site navigation - also for debugging
             secure: process.env.NODE_ENV === "production",
             path: "/",
-            maxAge: 3600,
+            maxAge: 60 * 60, // 1 hour
         });
 
         return response;

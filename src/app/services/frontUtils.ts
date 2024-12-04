@@ -7,8 +7,7 @@ export function getUserRoleFromCookies(): string | null {
         return null;
     }
     // Get the token from cookies
-    const cookie = document.cookie.split('; ').find(row => row.startsWith('token='));
-    const token = cookie?.split('=')[1];
+    const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
     if (!token) return null;
     try {
         // Decode the token to get the payload

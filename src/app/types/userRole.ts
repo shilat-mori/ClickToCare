@@ -1,5 +1,5 @@
 export enum UserRole {
-    unauthorized = 0,  // No access
-    authorized = 1,    // Basic authorized user
-    admin = 2          // Admin user
+    unauthorized = 1,  // New user - very limited access
+    authorized = 2,    // Basic authorized user
+    admin = 3          // Admin user
 }
