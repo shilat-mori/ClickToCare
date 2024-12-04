@@ -19,6 +19,7 @@ const Signup = () => {
         setMessage(response.data.error);
       }
       else {
+        //no need to check role here, we just created a new user, unauthorized
         router.push('/pages/waiting/');
         setTimeout(() => {
           router.refresh(); // Ensure fresh data on layout

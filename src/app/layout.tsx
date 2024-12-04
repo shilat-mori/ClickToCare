@@ -42,6 +42,8 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
     router.refresh();    // Refresh to re-trigger layout check
   };
 
+  const rolesStr = ["new user", "authorized user", "admin"];
+
   return (
     <html lang="en">
       <body>
@@ -49,7 +51,7 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
           <h1>Welcome to the App</h1>
           {role && (
             <div>
-              <p>User Role: {role}</p>
+              <p>User Role: {rolesStr[+role - 1]}</p>
               <button onClick={handleSignOut} className="bg-red-500 text-white p-2 rounded">
                 Sign Out
               </button>

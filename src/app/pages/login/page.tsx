@@ -3,6 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { getUserRoleFromCookies } from '@/app/services/frontUtils';
+import { UserRole } from '@/app/types/userRole';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -19,9 +20,18 @@ const Login = () => {
         console.log(response.data.error);
       }
       else {
-        //check user role
+        //check user role and route accordingly
         const role = getUserRoleFromCookies();
-        router.push('/pages/publicTasks');
+        if(!role){
+          //if role == null, user not logged in. should be caught in the if.
+          console.error("role is null, but login post retured success");
+        }else if(+role < UserRole.authorized){
+          //otherwise, if new user (unauthorized)
+          router.push('/pages/waiting');
+        } else{
+          //else - authorized user and admin
+          router.push('/pages/publicTasks');
+        }
         setTimeout(() => {
           router.refresh(); // Ensure fresh data on layout
         }, 500); // Slight delay for cookie propagation

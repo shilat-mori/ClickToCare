@@ -1,6 +1,7 @@
 "use client"
 import { jwtDecode } from 'jwt-decode';
 
+//check the cookies for the current user role (number from 1-3), or null if logged out
 export function getUserRoleFromCookies(): string | null {
     // Check if running on the client-side
     if (typeof window === 'undefined') {
