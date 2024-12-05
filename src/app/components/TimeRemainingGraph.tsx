@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-
-interface TimeTrackerProps {
-  totalTime: number; // Total time in seconds
-  endTime: number;   // End time as a timestamp in milliseconds
-}
+import TimeTrackerProps from "../types/timeTrackerProps";
 
 const TimeTracker: React.FC<TimeTrackerProps> = ({ totalTime, endTime }) => {
   const [timeRemaining, setTimeRemaining] = useState<number>(totalTime);
+  const percentage = Math.max((timeRemaining / totalTime) * 100, 0);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -31,8 +28,6 @@ const TimeTracker: React.FC<TimeTrackerProps> = ({ totalTime, endTime }) => {
     if (timeRemaining <= 2 * 60) return "orange";
     return "green";
   };
-
-  const percentage = Math.max((timeRemaining / totalTime) * 100, 0);
 
   return (
     <div style={{ width: 100, height: 100 }}>

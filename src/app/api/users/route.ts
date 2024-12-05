@@ -1,11 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import connect from "@/app/lib/db/mongodb";
 import User from "@/app/lib/models/userSchema";
-import { generateToken } from "../auth/tokenUtil";
+import { generateToken } from "../../lib/tokenUtil";
 import { UserRole } from "@/app/types/userRole";
 import bcrypt from 'bcryptjs';
-
-const secret = process.env.SECRET_KEY || 'your-secret-key';
 
 //add a new user - signUp
 export async function POST(req: NextRequest) {
@@ -24,7 +22,7 @@ export async function POST(req: NextRequest) {
         const newUser = new User({ username, password: hashedPassword, email, role: UserRole.unauthorized });
         await newUser.save();
         //generate a token - unauthorized, since we just signed up
-        const token = generateToken(newUser._id, UserRole.unauthorized);
+        const token = await generateToken(newUser._id, UserRole.unauthorized);
         // Set the token in a cookie
         const response = NextResponse.json({ message: "User created successfully", user: newUser });
         response.cookies.set("token", token, {

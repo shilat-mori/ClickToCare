@@ -1,8 +1,8 @@
 "use client"
-import { jwtDecode } from 'jwt-decode';
+import { jwtVerify } from 'jose';
 
 //check the cookies for the current user role (number from 1-3), or null if logged out
-export function getUserRoleFromCookies(): string | null {
+export async function getUserRoleFromCookies(): Promise<string | null> {
     // Check if running on the client-side
     if (typeof window === 'undefined') {
         return null;
@@ -11,11 +11,15 @@ export function getUserRoleFromCookies(): string | null {
     const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
     if (!token) return null;
     try {
-        // Decode the token to get the payload
-        const decoded: { role: string } = jwtDecode(token);
-        return decoded.role || null;
+        // Create the secret as Uint8Array (used for verification)
+        const secret = new TextEncoder().encode(process.env.SECRET_KEY || 'your-secret-key');
+
+        // Verify and decode the token
+        const { payload } = await jwtVerify(token, secret);
+        console.log("get role from cookies - role = " + payload.role);
+        return payload.role as string || null;
     } catch (error) {
-        console.error('Error decoding token:', error);
+        console.error('Error verifying token:', error);
         return null;
     }
 }

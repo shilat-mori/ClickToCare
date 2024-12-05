@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import connect from "@/app/lib/db/mongodb";
 import User from "@/app/lib/models/userSchema";
-import { generateToken } from "../auth/tokenUtil";
+import { generateToken } from "../../lib/tokenUtil";
 import bcrypt from 'bcryptjs';
-
-const secret = process.env.SECRET_KEY || 'your-secret-key';
 
 //check the user with DB - logIn
 export async function POST(req: NextRequest) {
@@ -26,7 +24,7 @@ export async function POST(req: NextRequest) {
         }
 
         // Generate a JWT token with user role
-        const token = generateToken(user._id, user.role);
+        const token = await generateToken(user._id, user.role);
         // Set the token in a cookie
         const response = NextResponse.json({ message: 'Login successful' });
         response.cookies.set('token', token, {

@@ -30,7 +30,7 @@ const Login = () => {
           router.push('/pages/waiting');
         } else{
           //else - authorized user and admin
-          router.push('/pages/publicTasks');
+          router.push('/pages/protected/publicTasks');
         }
         setTimeout(() => {
           router.refresh(); // Ensure fresh data on layout
