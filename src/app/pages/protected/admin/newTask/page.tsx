@@ -4,7 +4,7 @@ import ITask from '@/app/types/tasks';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
-const newTask = () => {
+const NewTask = () => {
     const router = useRouter();
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
@@ -196,4 +196,4 @@ const newTask = () => {
     )
 }
 
-export default newTask
+export default NewTask
