@@ -21,9 +21,6 @@ const Signup = () => {
       else {
         //no need to check role here, we just created a new user, unauthorized
         router.push('/pages/waiting/');
-        setTimeout(() => {
-          router.refresh(); // Ensure fresh data on layout
-        }, 500); // Slight delay for cookie propagation
       }
 
     } catch (error) {

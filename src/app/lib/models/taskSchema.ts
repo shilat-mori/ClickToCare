@@ -3,7 +3,7 @@ import ITask from '@/app/types/tasks';
 
 const TaskSchema: Schema<ITask> = new Schema({
     name: { type: String, required: true },
-    description: { type: String, required: true },
+    description: { type: String},
     category: { type: String, required: true },
     points: { type: Number, required: true },
     assigned: { type: [String], default: [] },

@@ -22,19 +22,16 @@ const Login = () => {
       else {
         //check user role and route accordingly
         const role = getUserRoleFromCookies();
-        if(!role){
+        if (!role) {
           //if role == null, user not logged in. should be caught in the if.
           console.error("role is null, but login post retured success");
-        }else if(+role < UserRole.authorized){
+        } else if (+role < UserRole.authorized) {
           //otherwise, if new user (unauthorized)
           router.push('/pages/waiting');
-        } else{
+        } else {
           //else - authorized user and admin
           router.push('/pages/protected/publicTasks');
         }
-        setTimeout(() => {
-          router.refresh(); // Ensure fresh data on layout
-        }, 500); // Slight delay for cookie propagation
       }
     } catch (error) {
       console.error('Error logging in', error);
