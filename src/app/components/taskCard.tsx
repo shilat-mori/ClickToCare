@@ -25,30 +25,6 @@ const categoryColor = (category: string) => {
     }
 }
 
-const renderActionButtons = () => {
-    const role = getUserRoleFromCookies();
-    console.log("renderActionButtons, role: ", role);
-    if (!role) {
-        return <div>Don't be here</div>;
-    }
-    if (+role == UserRole.admin) {
-        return (
-            <div>
-                <button>Edit</button>
-                <button>Delete</button>
-            </div>
-        );
-    }
-    if (+role == UserRole.authorized) {
-        const assignedToMe = true; //add a function to check
-        if (assignedToMe) {
-            return <button>Remove me</button>
-        } else {
-            return <button>Add Me!</button>
-        }
-    }
-};
-
 const TaskCard: React.FC<CardProps> = ({ taskInfo, taskActions }) => {
     const { base, tag } = categoryColor(taskInfo.category);
 
