@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import ITask from '../types/tasks'
 import { getUserRoleFromCookies } from '../services/frontUtils';
 import { UserRole } from '../types/userRole';
+import TimeRemainingCard from './TimeRemainingCard';
 
 interface CardProps {
     taskInfo: ITask;
@@ -77,6 +78,7 @@ const TaskCard: React.FC<CardProps> = ({ taskInfo, taskActions }) => {
             <p>Assigned: {taskInfo.assigned}</p>
             <p>Start Time: {new Date(taskInfo.creation_time).toLocaleString()}</p>
             <p>End Time: {new Date(taskInfo.end_time).toLocaleString()}</p>
+            <TimeRemainingCard startTime={new Date(taskInfo.creation_time)} endTime={new Date(taskInfo.end_time)}/>
             <div className="w-full border-t-2 border-gray-500 border-dashed pt-2">
                 {renderActionButtons()}
             </div>
