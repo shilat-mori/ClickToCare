@@ -1,4 +1,5 @@
 "use client"
+import TaskCard from '@/app/components/taskCard';
 import ITask from '@/app/types/tasks';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
@@ -8,6 +9,8 @@ const PublicTasks = () => {
   const [category, setCategory] = useState('');
   const [sortBy, setSortBy] = useState('creation_time');
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
+
+  const filterStyle = "border p-2 rounded";
 
   // Fetch tasks when category, sortBy, or order changes
   useEffect(() => {
@@ -25,14 +28,14 @@ const PublicTasks = () => {
     fetchTasks();
   }, [category, sortBy, order]);
 
-  const navigation = () => {
-    return (<div className="fixed top-0 left-0 right-0 bg-white z-10 shadow-md p-4">
-      <div className="flex justify-between space-x-4">
+  const navigation = () => (
+    <div className="fixed top-20 left-0 right-0 bg-white z-10 shadow-md p-4">
+      <div className="flex justify-start space-x-4">
         {/* Category Filter */}
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="border p-2 rounded"
+          className={filterStyle}
         >
           <option value="">All Categories</option>
           <option value="driving">Driving</option>
@@ -46,7 +49,7 @@ const PublicTasks = () => {
         <select
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
-          className="border p-2 rounded"
+          className={filterStyle}
         >
           <option value="creation_time">Sort by Creation Time</option>
           <option value="points">Sort by Points</option>
@@ -55,32 +58,29 @@ const PublicTasks = () => {
 
         {/* Sort Order */}
         <button
-          onClick={() => { setOrder((order == 'asc') ? 'desc' : 'asc') }}>
+          onClick={() => { setOrder((order == 'asc') ? 'desc' : 'asc') }}
+          className={filterStyle}>
           {(order == 'asc') ? "↑" : "↓"}
         </button>
       </div>
-    </div>);
-  };
+    </div>
+  );
 
   console.log("tasks: ", tasks);
   return (
     <div>
       {navigation()}
-      <div className="pt-20">
+      <div className="pt-36">
         {tasks.length === 0 ? (
           <p>No tasks available.</p>
         ) : (
-          <ul>
+          <div className="grid grid-cols-3 gap-4">
             {tasks.map((task) => (
-              <li key={task._id} className="border p-4 mb-4 rounded">
-                <h2 className="text-xl font-bold">{task.name}</h2>
-                <p>{task.description}</p>
-                <p>Category: {task.category}</p>
-                <p>Points: {task.points}</p>
-                <p>End Time: {new Date(task.end_time).toLocaleString()}</p>
-              </li>
+              <div key={task._id}>
+                <TaskCard taskInfo={task} taskActions={["bla", "bla bla"]} />
+              </div>
             ))}
-          </ul>
+          </div>
         )}
       </div>
     </div>
