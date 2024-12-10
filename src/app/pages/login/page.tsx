@@ -21,7 +21,8 @@ const Login = () => {
       }
       else {
         //check user role and route accordingly
-        const role = getUserRoleFromCookies();
+        const role = await getUserRoleFromCookies();
+        console.log("login, handle submit - role: ", role);
         if (!role) {
           //if role == null, user not logged in. should be caught in the if.
           console.error("role is null, but login post retured success");

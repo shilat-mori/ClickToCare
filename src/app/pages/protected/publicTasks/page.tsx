@@ -66,7 +66,6 @@ const PublicTasks = () => {
     </div>
   );
 
-  console.log("tasks: ", tasks);
   return (
     <div>
       {navigation()}

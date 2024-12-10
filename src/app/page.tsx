@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 export default function Home() {
   //for the routing here there is no need for checking, since everyone can acceess those pages
   const router = useRouter();
-  const buttonStyle = "bg-red-500 text-white p-2 rounded";
+  const buttonStyle = "bg-sky-500 text-white p-2 rounded m-4";
   return (
     <div>
       <h1>אמץ משימה</h1>

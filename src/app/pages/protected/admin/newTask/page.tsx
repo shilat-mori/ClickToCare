@@ -28,7 +28,6 @@ const NewTask = () => {
 
     const calcEndTime = (duration: string) => {
         const [days, hours, minutes] = duration.split(':').map((num) => parseInt(num, 10));
-        console.log(`d=${days}, h=${hours}, m=${minutes}`);
         const durationInMillis =
             (days * 24 * 60 * 60 * 1000) + // Convert days to milliseconds
             (hours * 60 * 60 * 1000) + // Convert hours to milliseconds
@@ -53,7 +52,6 @@ const NewTask = () => {
         }
         // Ensure the string doesn't exceed 6 characters (max allowed: "DD:HH:MM")
         if (length > 6) {
-            console.log(newDuration)
             newDuration = newDuration.substring(0, 6).replace(/(\d{2})(\d{2})(\d{1,2})$/, '$1:$2:$3');
         }
 

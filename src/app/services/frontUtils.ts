@@ -1,5 +1,18 @@
 "use client"
-import { jwtVerify } from 'jose';
+
+function decodeJWT(token: string): any | null {
+    const parts = token.split('.');
+
+    if (parts.length !== 3) {
+        console.error('Invalid token');
+        return null;
+    }
+
+    // Decode the payload (second part) from base64url
+    const payload = parts[1].replace(/-/g, '+').replace(/_/g, '/');
+    const decoded = JSON.parse(atob(payload));  // `atob` decodes base64 encoded string
+    return decoded;
+}
 
 //check the cookies for the current user role (number from 1-3), or null if logged out
 export async function getUserRoleFromCookies(): Promise<string | null> {
@@ -11,18 +24,21 @@ export async function getUserRoleFromCookies(): Promise<string | null> {
     const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
     if (!token) return null;
     try {
-        // Create the secret as Uint8Array (used for verification)
-        const secret = new TextEncoder().encode(process.env.SECRET_KEY || 'your-secret-key');
+        // Decode the token manually
+        const decoded = decodeJWT(token);
 
-        // Verify and decode the token
-        const { payload } = await jwtVerify(token, secret);
-        console.log("get role from cookies - role = " + payload.role);
-        return payload.role as string || null;
+        if (decoded && decoded.role) {
+            console.log("User role from cookies:", decoded.role);
+            return decoded.role as string;
+        }
+
+        console.error('Role not found in token payload');
+        return null;
     } catch (error) {
-        console.error('Error verifying token:', error);
+        console.error('Error decoding token:', error);
         return null;
     }
-}
+};
 
 //remove token - for debugging?
 export const removeToken = () => {
