@@ -66,6 +66,15 @@ const PublicTasks = () => {
     </div>
   );
 
+  // Update the task assigned list in state when changes are made
+  const setAssigned = (taskId: string, updatedAssigned: string[]) => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task._id === taskId ? { ...task, assigned: updatedAssigned } : task
+      )
+    );
+  };
+
   return (
     <div>
       {navigation()}
@@ -76,7 +85,7 @@ const PublicTasks = () => {
           <div className="grid grid-cols-3 gap-4">
             {tasks.map((task) => (
               <div key={task._id}>
-                <TaskCard taskInfo={task} taskActions={["bla", "bla bla"]} />
+                <TaskCard taskInfo={task} setAssigned={setAssigned} />
               </div>
             ))}
           </div>

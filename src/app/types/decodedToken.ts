@@ -1,6 +1,6 @@
 import { UserRole } from "./userRole";
 
 export default interface DecodedToken {
-    id: string;
+    username: string;
     role: UserRole;
 }

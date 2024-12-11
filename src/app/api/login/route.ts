@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
         }
 
         // Generate a JWT token with user role
-        const token = await generateToken(user._id, user.role);
+        const token = await generateToken(user.username, user.role);
         // Set the token in a cookie
         const response = NextResponse.json({ message: 'Login successful' });
         response.cookies.set('token', token, {

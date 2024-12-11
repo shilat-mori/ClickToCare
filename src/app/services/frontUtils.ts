@@ -40,6 +40,32 @@ export async function getUserRoleFromCookies(): Promise<string | null> {
     }
 };
 
+//check the cookies for the current user name (unique), or null if logged out
+export async function getUsernameFromCookies(): Promise<string | null> {
+    // Check if running on the client-side
+    if (typeof window === 'undefined') {
+        return null;
+    }
+    // Get the token from cookies
+    const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
+    if (!token) return null;
+    try {
+        // Decode the token manually
+        const decoded = decodeJWT(token);
+
+        if (decoded && decoded.username) {
+            console.log("Username from cookies:", decoded.username);
+            return decoded.username as string;
+        }
+
+        console.error('Username not found in token payload');
+        return null;
+    } catch (error) {
+        console.error('Error decoding token:', error);
+        return null;
+    }
+};
+
 //remove token - for debugging?
 export const removeToken = () => {
     // Set the cookie with an expired date to delete it

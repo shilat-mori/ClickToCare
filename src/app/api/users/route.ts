@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
         const newUser = new User({ username, password: hashedPassword, email, role: UserRole.unauthorized });
         await newUser.save();
         //generate a token - unauthorized, since we just signed up
-        const token = await generateToken(newUser._id, UserRole.unauthorized);
+        const token = await generateToken(newUser.username, UserRole.unauthorized);
         // Set the token in a cookie
         const response = NextResponse.json({ message: "User created successfully", user: newUser });
         response.cookies.set("token", token, {
