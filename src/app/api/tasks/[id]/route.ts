@@ -46,3 +46,22 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
         return NextResponse.json({ error: "Error updating task" }, { status: 500 });
     }
 }
+
+// DELETE - Delete task by ID
+export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+    try {
+        await connect();
+
+        // Find and delete the task by ID
+        const deletedTask = await Task.findByIdAndDelete(params.id);
+
+        if (!deletedTask) {
+            return NextResponse.json({ error: "Task not found" }, { status: 404 });
+        }
+
+        return NextResponse.json({ message: "Task deleted successfully" });
+    } catch (error) {
+        console.error("Error deleting task by ID: ", error);
+        return NextResponse.json({ error: "Error deleting task" }, { status: 500 });
+    }
+}

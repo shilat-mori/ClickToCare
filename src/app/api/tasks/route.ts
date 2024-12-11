@@ -9,13 +9,6 @@ export async function POST(req: NextRequest) {
         await connect();
         //get the user data
         const { name, description, category, points, assigned, creation_time, end_time } = await req.json();
-        // console.log("name: ", name);
-        // console.log("description: ", description);
-        // console.log("category: ", category);
-        // console.log("points: ", points);
-        // console.log("assigned: ", assigned);
-        // console.log("creation_time: ", creation_time);
-        // console.log("end_time: ", end_time);
         if (!name || !description || !category || points <= 0 || !end_time) {
             return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
         }
@@ -61,5 +54,3 @@ export async function GET(req: NextRequest) {
         return NextResponse.json({ error: "Error fetching tasks" }, { status: 500 });
     }
 };
-//put - admin can update everything, user can add/ remove himself
-//delete - in the future also by time running out. for now only admin

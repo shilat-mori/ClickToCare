@@ -6,6 +6,7 @@ import { UserRole } from '../types/userRole';
 import TimeRemainingCard from './TimeRemainingCard';
 import { removeMe, addMe, assignedToMe } from '../services/changeAssigned';
 import AssigneeList from './assigneeList';
+import { deleteTask } from '../services/adminTaskDelete';
 
 interface CardProps {
     taskInfo: ITask;
@@ -80,7 +81,7 @@ const TaskCard: React.FC<CardProps> = ({ taskInfo, setAssigned }) => {
             return (
                 <div>
                     <button className={`${buttonStyle} bg-orange-300`}>Edit</button>
-                    <button className={`${buttonStyle} bg-red-400`}>Delete</button>
+                    <button onClick={() => deleteTask(taskInfo._id)} className={`${buttonStyle} bg-red-400`}>Delete</button>
                 </div>
             );
         }
