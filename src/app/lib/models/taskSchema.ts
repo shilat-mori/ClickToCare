@@ -6,6 +6,7 @@ const TaskSchema: Schema<ITask> = new Schema({
     description: { type: String},
     category: { type: String, required: true },
     points: { type: Number, required: true },
+    assigned_max: {type: Number, required: true, default: 1},
     assigned: { type: [String], default: [] },
     creation_time: { type: Date, default: Date.now },
     end_time: { type: Date, required: true }

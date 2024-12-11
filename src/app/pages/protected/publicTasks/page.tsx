@@ -82,9 +82,9 @@ const PublicTasks = () => {
         {tasks.length === 0 ? (
           <p>No tasks available.</p>
         ) : (
-          <div className="grid grid-cols-3 gap-4">
+          <div className="columns-3 gap-2">
             {tasks.map((task) => (
-              <div key={task._id}>
+              <div key={task._id} className="break-inside-avoid p-4 rounded">
                 <TaskCard taskInfo={task} setAssigned={setAssigned} />
               </div>
             ))}

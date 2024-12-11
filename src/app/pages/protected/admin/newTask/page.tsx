@@ -10,6 +10,7 @@ const NewTask = () => {
     const [description, setDescription] = useState('');
     const [category, setCategory] = useState('');
     const [points, setPoints] = useState<number>(0);
+    const [assigned_max, setAssigned_max] = useState<number>(0);
     const [startTime] = useState<Date>(new Date());
     const [endTime, setEndTime] = useState<Date | null>(null);
     const [endByDate, setEndByDate] = useState<boolean>(true);
@@ -75,6 +76,9 @@ const NewTask = () => {
             console.error("Points must be between 0.5 and 5.");
             return false;
         }
+        if(assigned_max < 1){
+            console.error("At lease one assignee per task")
+        }
         if (!endTime || endTime <= startTime) {
             console.error("End time must be after the start time.");
             return false;
@@ -92,6 +96,7 @@ const NewTask = () => {
             description,
             category,
             points,
+            assigned_max,
             assigned: [],
             creation_time: startTime,
             end_time: endTime!,
@@ -183,6 +188,17 @@ const NewTask = () => {
                         step={0.5}
                         min={0}
                         max={5}
+                    />
+                </label>
+                <label>
+                    Number of assignees:
+                    <input
+                        type="number"
+                        name="assigned_max"
+                        value={assigned_max}
+                        onChange={(e) => setAssigned_max(parseFloat(e.target.value) || 0)}
+                        className={inpStyle}
+                        min={0}
                     />
                 </label>
                 {renderEndDate()}

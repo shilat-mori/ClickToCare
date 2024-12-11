@@ -5,6 +5,7 @@ import { getUserRoleFromCookies } from '../services/frontUtils';
 import { UserRole } from '../types/userRole';
 import TimeRemainingCard from './TimeRemainingCard';
 import { removeMe, addMe, assignedToMe } from '../services/changeAssigned';
+import AssigneeList from './assigneeList';
 
 interface CardProps {
     taskInfo: ITask;
@@ -52,8 +53,12 @@ const TaskCard: React.FC<CardProps> = ({ taskInfo, setAssigned }) => {
     }, [taskInfo._id]);
 
     const handleAssign = async () => {
+        //check if there are no empty places:
+        if (taskInfo.assigned.length >= taskInfo.assigned_max)
+            return;
+
         const newAssign = await addMe(taskInfo._id); // Add user to task
-        if(newAssign){
+        if (newAssign) {
             setAssigned(taskInfo._id, newAssign);
         }
         setIsAssigned(true); // Update state to reflect assignment
@@ -61,7 +66,7 @@ const TaskCard: React.FC<CardProps> = ({ taskInfo, setAssigned }) => {
 
     const handleRemove = async () => {
         const newAssign = await removeMe(taskInfo._id); // Remove user from task
-        if(newAssign){
+        if (newAssign) {
             setAssigned(taskInfo._id, newAssign);
         }
         setIsAssigned(false); // Update state to reflect unassignment
@@ -93,7 +98,7 @@ const TaskCard: React.FC<CardProps> = ({ taskInfo, setAssigned }) => {
     };
 
     return (
-        <div className={`relative border-2 border-gray-500 p-4 rounded-xl ${base}`}>
+        <div className={`relative border-2 border-gray-500 p-4 pt-10 rounded-xl ${base}`}>
             {/* Category Tag */}
             <span
                 className={`absolute top-2 right-2 px-3 py-1 text-sm font-semibold border rounded-full ${tag}`}>
@@ -101,8 +106,10 @@ const TaskCard: React.FC<CardProps> = ({ taskInfo, setAssigned }) => {
             </span>
             <h2 className="text-xl font-bold">{taskInfo.name}</h2>
             <p className="border border-gray-500 p-2 m-2 rounded-xl">{taskInfo.description}</p>
-            <p>Points: {taskInfo.points}</p>
-            <p>Assigned: {taskInfo.assigned.join(', ')}</p>
+            <p className="flex justify-center items-center">
+                {taskInfo.points} X <img src="/images/points_logo.png" alt="points icon" className="w-12 h-12 ml-2" />
+            </p>
+            <AssigneeList assigned={taskInfo.assigned} maxAssignees={taskInfo.assigned_max} />
             <TimeRemainingCard startTime={new Date(taskInfo.creation_time)} endTime={new Date(taskInfo.end_time)} />
             <div className="w-full border-t-2 border-gray-500 border-dashed pt-2">
                 {renderActionButtons()}
