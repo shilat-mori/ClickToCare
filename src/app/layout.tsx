@@ -9,6 +9,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main>
           {children}
         </main>
+        <script src="https://cdn.enable.co.il/licenses/enable-L34552majigz0bvr-1224-66349/init.js"></script>
       </body>
     </html>
   );
