@@ -1,17 +1,13 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import ITask from '../types/tasks'
 import { getUserRoleFromCookies } from '../services/frontUtils';
 import { UserRole } from '../types/userRole';
 import TimeRemainingCard from './TimeRemainingCard';
 import { removeMe, addMe, assignedToMe } from '../services/changeAssigned';
 import AssigneeList from './assigneeList';
 import { deleteTask } from '../services/adminTaskDelete';
-
-interface CardProps {
-    taskInfo: ITask;
-    setAssigned: (taskId: string, updatedAssigned: string[]) => void;
-}
+import Image from 'next/image';
+import CardProps from '../types/cardProps';
 
 //function to determine card color based on category
 const categoryColor = (category: string) => {
@@ -108,7 +104,7 @@ const TaskCard: React.FC<CardProps> = ({ taskInfo, setAssigned }) => {
             <h2 className="text-xl font-bold">{taskInfo.name}</h2>
             <p className="border border-gray-500 p-2 m-2 rounded-xl">{taskInfo.description}</p>
             <p className="flex justify-center items-center">
-                {taskInfo.points} X <img src="/images/points_logo.png" alt="points icon" className="w-12 h-12 ml-2" />
+                {taskInfo.points} X <Image src="/images/points_logo.png" alt="points icon" width={80} height={80} />
             </p>
             <AssigneeList assigned={taskInfo.assigned} maxAssignees={taskInfo.assigned_max} />
             <TimeRemainingCard startTime={new Date(taskInfo.creation_time)} endTime={new Date(taskInfo.end_time)} />

@@ -1,9 +1,5 @@
 import React from 'react';
-
-interface AssigneeListProps {
-    assigned: string[];
-    maxAssignees: number;
-}
+import AssigneeListProps from '../types/assigneeListProps';
 
 const AssigneeList: React.FC<AssigneeListProps> = ({ assigned, maxAssignees }) => {
     const emptySlots = maxAssignees - assigned.length;
