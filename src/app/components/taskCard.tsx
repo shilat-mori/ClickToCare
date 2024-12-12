@@ -29,7 +29,7 @@ const categoryColor = (category: string) => {
 
 const TaskCard: React.FC<CardProps> = ({ taskInfo, setAssigned }) => {
     const { base, tag } = categoryColor(taskInfo.category);
-    const [role, setRole] = useState<string | null>(null);
+    const [role, setRole] = useState<UserRole | null>(null);
     const [isAssigned, setIsAssigned] = useState<boolean | null>(null);
     const buttonStyle = "text-white p-2 rounded mx-4";
 
@@ -73,7 +73,7 @@ const TaskCard: React.FC<CardProps> = ({ taskInfo, setAssigned }) => {
         if (!role) {
             return <div>Loading...</div>;
         }
-        if (+role === UserRole.admin) {
+        if (role === UserRole.admin) {
             return (
                 <div>
                     <button className={`${buttonStyle} bg-orange-300`}>Edit</button>
@@ -81,7 +81,7 @@ const TaskCard: React.FC<CardProps> = ({ taskInfo, setAssigned }) => {
                 </div>
             );
         }
-        if (+role === UserRole.authorized) {
+        if (role === UserRole.authorized) {
             if (isAssigned === null) {
                 return <div>Loading...</div>;
             }

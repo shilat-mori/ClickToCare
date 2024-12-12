@@ -1,14 +1,17 @@
 "use client"
+import React, { useEffect, useState } from 'react'
+import { useHeaderHeight } from '@/app/context/HeaderHeightContext';
 import TaskCard from '@/app/components/taskCard';
 import ITask from '@/app/types/tasks';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
 
 const PublicTasks = () => {
+  const { headerHeight } = useHeaderHeight();
   const [tasks, setTasks] = useState<ITask[]>([]);
   const [category, setCategory] = useState('');
   const [sortBy, setSortBy] = useState('creation_time');
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
+  const [startHeight, setStartHeight] = useState<number>(80);
 
   const filterStyle = "border p-2 rounded";
 
@@ -28,8 +31,13 @@ const PublicTasks = () => {
     fetchTasks();
   }, [category, sortBy, order]);
 
+  useEffect(() => {
+    setStartHeight(headerHeight === 80 ? 80 : 150);
+  }, [headerHeight]);
+
   const navigation = () => (
-    <div className="fixed top-20 left-0 right-0 bg-white z-10 shadow-md p-4">
+    <div className="fixed left-0 right-0 bg-white z-10 shadow-md p-4"
+      style={{ top: `${startHeight}px` }}>
       <div className="flex justify-start space-x-4">
         {/* Category Filter */}
         <select

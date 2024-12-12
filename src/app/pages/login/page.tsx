@@ -26,7 +26,7 @@ const Login = () => {
         if (!role) {
           //if role == null, user not logged in. should be caught in the if.
           console.error("role is null, but login post retured success");
-        } else if (+role < UserRole.authorized) {
+        } else if (role < UserRole.authorized) {
           //otherwise, if new user (unauthorized)
           router.push('/pages/waiting');
         } else {

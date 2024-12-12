@@ -1,4 +1,5 @@
 "use client"
+import { UserRole } from "../types/userRole";
 
 function decodeJWT(token: string): any | null {
     const parts = token.split('.');
@@ -15,7 +16,7 @@ function decodeJWT(token: string): any | null {
 }
 
 //check the cookies for the current user role (number from 1-3), or null if logged out
-export async function getUserRoleFromCookies(): Promise<string | null> {
+export async function getUserRoleFromCookies(): Promise<UserRole | null> {
     // Check if running on the client-side
     if (typeof window === 'undefined') {
         return null;
@@ -29,7 +30,7 @@ export async function getUserRoleFromCookies(): Promise<string | null> {
 
         if (decoded && decoded.role) {
             console.log("User role from cookies:", decoded.role);
-            return decoded.role as string;
+            return decoded.role as UserRole;
         }
 
         console.error('Role not found in token payload');

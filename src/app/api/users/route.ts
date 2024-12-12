@@ -40,12 +40,15 @@ export async function POST(req: NextRequest) {
 };
 
 //get all users - used to verify login, and for the admin to get all unathorized users
-export async function GET() {
+export async function GET(req: NextRequest) {
     try {
         await connect();
-        const users = await User.find();
-        return NextResponse.json({ message: "Fetched users successfully", data: users });
+        // Extract query params
+        const role = req.nextUrl.searchParams.get('role') || '';
+        const filter = role ? { role } : {};
+        const users = await User.find(filter);
+        return NextResponse.json(users);
     } catch (error) {
-        return NextResponse.json("Error in fetching users " + error);
+        return NextResponse.json({ error: "Error in fetching users " + error });
     }
 };
