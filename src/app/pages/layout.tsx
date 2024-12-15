@@ -8,7 +8,7 @@ import { useHeaderHeight } from "../context/HeaderHeightContext";
 export default function Layout({ children }: { children: React.ReactNode }) {
     const router = useRouter();
     const [openMenu, setOpenMenu] = useState(false);
-    const { setHeaderHeight } = useHeaderHeight();
+    const { headerHeight, setHeaderHeight } = useHeaderHeight();
 
     useEffect(() => {
         const header = document.getElementById("header");
@@ -41,7 +41,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     </div>
                 )}
             </header>
-            <main className="overflow-auto bg-gray-100">
+            <main className="overflow-auto bg-gray-100" style={{ paddingTop: `${headerHeight}px` }}>
                 {children}
             </main>
         </div>

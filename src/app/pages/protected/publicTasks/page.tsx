@@ -86,7 +86,7 @@ const PublicTasks = () => {
   return (
     <div>
       {navigation()}
-      <div className="pt-36">
+      <div className="pt-24">
         {tasks.length === 0 ? (
           <p>No tasks available.</p>
         ) : (
