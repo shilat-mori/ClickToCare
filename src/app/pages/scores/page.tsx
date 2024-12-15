@@ -1,4 +1,5 @@
 "use client"
+import UserScoreCard from '@/app/components/userScoreCard';
 import { UserRole } from '@/app/types/userRole';
 import IUser from '@/app/types/users';
 import axios from 'axios';
@@ -29,7 +30,9 @@ const Scores = () => {
       <ul>
         {users.length > 0 ? (
           users.map((user) => (
-            <li key={user._id}>{user.username}</li>
+            <li key={user._id}>
+               <UserScoreCard {...user}/>
+            </li>
           ))
         ) : (
           <p>No users found</p>
