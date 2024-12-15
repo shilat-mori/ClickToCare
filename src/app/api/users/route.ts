@@ -49,7 +49,7 @@ export async function GET(req: NextRequest) {
         const role = req.nextUrl.searchParams.get('role') || '';
         const filter = role ? { role } : {};
         const sortCriteria: { score: SortOrder } = { score: 'desc' };
-        
+
         const users = await User.find(filter).sort(sortCriteria);
         return NextResponse.json(users);
     } catch (error) {
@@ -61,7 +61,7 @@ export async function GET(req: NextRequest) {
 export async function PUT(req: NextRequest) {
     try {
         await connect();
-        const { username, addition } = await req.json();
+        const { username, addition, role } = await req.json();
 
         console.log(`PUT on api/users/ - username: ${username}, addition: ${addition}`);
 
@@ -74,11 +74,19 @@ export async function PUT(req: NextRequest) {
             return NextResponse.json({ error: "User not found" }, { status: 404 });
         }
 
-        // Update the score
-        user.score += addition;
+        //if the username has an unathorized role, it means the admin wants to verify him
+        //since the user can not add or remove tasks when unathorized
+        if (role === UserRole.unauthorized) {
+            user.role = UserRole.authorized;
+        }
+        else {
+            // Update the score
+            user.score += addition;
+        }
+
         await user.save();
-        return NextResponse.json({ message: "User score updated successfully", user });
+        return NextResponse.json({ message: "User updated successfully", user });
     } catch (error) {
-        return NextResponse.json({ error: "Error in updating user score " + error });
+        return NextResponse.json({ error: "Error in updating user " + error });
     }
 };
