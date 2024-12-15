@@ -15,7 +15,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         if (header) {
             setHeaderHeight(header.offsetHeight);
         }
-    }, [openMenu, setHeaderHeight]);
+    }, [openMenu, setHeaderHeight]); 
 
     const handleSignOut = () => {
         removeToken();
