@@ -36,7 +36,15 @@ export async function GET(req: NextRequest) {
         const category = req.nextUrl.searchParams.get('category') || '';
         const sortBy = req.nextUrl.searchParams.get('sortBy');
         const order: 'asc' | 'desc' = req.nextUrl.searchParams.get('order') === 'desc' ? 'desc' : 'asc';
+        const username = req.nextUrl.searchParams.get('username') || '';
 
+        // give all user-tasks if user is given
+        if (username) {
+            const tasks = await Task.find({ assigned: { $in: [username] } });
+            return NextResponse.json(tasks);
+        }
+
+        // otherwise - give all tasks based on filer, and sorted:
         // Create filter
         const filter = category ? { category } : {};
         // Define sorting priority

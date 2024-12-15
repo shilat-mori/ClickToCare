@@ -29,7 +29,8 @@ const NavBar = () => {
                     <button className={buttonStyle} onClick={() => { router.push('/pages/protected/publicTasks'); }}>All Tasks</button>
                     <button className={buttonStyle} onClick={() => { router.push('/pages/protected/admin/reviewNewUsers'); }}>Verify Users</button>
                     <button className={buttonStyle} onClick={() => { router.push('/pages/protected/admin/newTask'); }}>Add a Task</button>
-                    <button className={`${buttonStyle} flex items-center space-x-2`}>
+                    <button className={`${buttonStyle} flex items-center space-x-2`}
+                        onClick={() => { router.push('/pages/scores'); }}>
                         <span>Score Board</span>
                         <Trophy />
                     </button>
@@ -42,7 +43,8 @@ const NavBar = () => {
                     <button className={buttonStyle} onClick={() => { router.push('/pages/protected/publicTasks'); }}>All Tasks</button>
                     <button className={buttonStyle} onClick={() => { router.push('/pages/protected/user/myTasks'); }}>My Tasks</button>
                     <button className={buttonStyle} onClick={() => { router.push('/pages/protected/user/myActivity'); }}>My Activity</button>
-                    <button className={`${buttonStyle} flex items-center space-x-2`}>
+                    <button className={`${buttonStyle} flex items-center space-x-2`}
+                        onClick={() => { router.push('/pages/scores'); }}>
                         <span>Score Board</span>
                         <Trophy />
                     </button>
@@ -53,7 +55,8 @@ const NavBar = () => {
             return (
                 <div className={divStyle}>
                     <button className={buttonStyle} onClick={() => { router.push('/pages/waiting'); }}>watch icon</button>
-                    <button className={`${buttonStyle} flex items-center space-x-2`}>
+                    <button className={`${buttonStyle} flex items-center space-x-2`}
+                        onClick={() => { router.push('/pages/scores'); }}>
                         <span>Score Board</span>
                         <Trophy />
                     </button>

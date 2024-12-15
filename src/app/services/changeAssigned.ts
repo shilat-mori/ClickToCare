@@ -38,6 +38,14 @@ export const addMe = async (taskId: string) => {
             assigned: newAssigned
         });
 
+        //update user score
+        console.log(`addMe - username: ${myUsername}, addition: ${Number(task.points)}`);
+        const userResponse = await axios.put('/api/users', {
+            username: myUsername as string,
+            addition: Number(task.points), //score is positive addition
+        });
+        console.log(userResponse.data);
+
         const updatedTask = response.data;
         console.log(updatedTask);
         return updatedTask.assigned;
@@ -60,6 +68,14 @@ const removeAssigned = async (taskId: string, usernameToRemove: string) => {
         const response = await axios.put(`/api/tasks/${taskId}`, {
             assigned: updatedAssigned
         });
+
+        //update user score
+        console.log(`removedAssigned - username: ${usernameToRemove}, addition: ${-Number(task.points)}`);
+        const userResponse = await axios.put('/api/users', {
+            username: usernameToRemove as string,
+            addition: -Number(task.points), //remove - the score is a negative addition
+        });
+        console.log(userResponse.data);
 
         const updatedTask = response.data;
         console.log(updatedTask);

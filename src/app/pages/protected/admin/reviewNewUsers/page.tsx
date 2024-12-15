@@ -14,7 +14,7 @@ const ReviewNewUsers = () => {
       });
       setUsers(response.data);
     } catch (error) {
-      console.error('Error fetching tasks:', error);
+      console.error('Error fetching users:', error);
     }
   };
 

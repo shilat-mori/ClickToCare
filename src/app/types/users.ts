@@ -7,4 +7,5 @@ export default interface IUser {
     email: string;
     password: string;
     role: UserRole;
+    score: number;
 }
