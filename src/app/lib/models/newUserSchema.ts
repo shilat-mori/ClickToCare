@@ -1,6 +1,5 @@
 import mongoose, { Model, Schema } from 'mongoose';
 import INewUser from '@/app/types/newUser'; //the interfave for new user
-import User from './userSchema'; //for the user info
 
 const NewUserSchema: Schema<INewUser> = new Schema({
     userInfo: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },

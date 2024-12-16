@@ -40,7 +40,7 @@ export async function GET(req: NextRequest) {
 
         // give all user-tasks if user is given
         if (username) {
-            const tasks = await Task.find({ assigned: { $in: [username] } });
+            const tasks = await Task.find({ "assigned.name": username });
             return NextResponse.json(tasks);
         }
 

@@ -4,6 +4,7 @@ import { useHeaderHeight } from '@/app/context/HeaderHeightContext';
 import TaskCard from '@/app/components/taskCard';
 import ITask from '@/app/types/tasks';
 import axios from 'axios';
+import { Assignee } from '@/app/types/assignee';
 
 const PublicTasks = () => {
   const { headerHeight } = useHeaderHeight();
@@ -75,7 +76,7 @@ const PublicTasks = () => {
   );
 
   // Update the task assigned list in state when changes are made
-  const setAssigned = (taskId: string, updatedAssigned: string[]) => {
+  const setAssigned = (taskId: string, updatedAssigned: Assignee[]) => {
     setTasks((prevTasks) =>
       prevTasks.map((task) =>
         task._id === taskId ? { ...task, assigned: updatedAssigned } : task

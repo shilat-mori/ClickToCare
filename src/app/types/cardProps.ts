@@ -1,6 +1,7 @@
 import ITask from '../types/tasks'
+import { Assignee } from './assignee';
 
 export default interface CardProps {
     taskInfo: ITask;
-    setAssigned: (taskId: string, updatedAssigned: string[]) => void;
+    setAssigned: (taskId: string, updatedAssigned: Assignee[]) => void;
 }
