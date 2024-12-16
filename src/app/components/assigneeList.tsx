@@ -11,7 +11,7 @@ const AssigneeList: React.FC<AssigneeListProps> = ({ assigned, maxAssignees }) =
                 <tbody>
                     {assigned.map((assignee, index) => (
                         <tr key={index} className="border border-gray-500">
-                            <td className="p-2">{assignee}</td>
+                            <td className="p-2">{assignee.name}</td>
                         </tr>
                     ))}
                     {Array.from({ length: emptySlots }, (_, index) => (

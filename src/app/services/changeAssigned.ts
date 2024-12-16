@@ -1,6 +1,7 @@
 "use client"
 import axios from 'axios';
 import { getUsernameFromCookies } from "./frontUtils";
+import { Assignee } from '../types/assignee';
 
 //check if assigned to me
 export const assignedToMe = async (taskId: string) => {
@@ -10,9 +11,9 @@ export const assignedToMe = async (taskId: string) => {
     try {
         const original = await axios.get(`/api/tasks/${taskId}`);
         const task = original.data;
-        return (task.assigned.includes(myUsername));
+        return (task.assigned.some((assignee: Assignee) => assignee.name === myUsername));
     }
-    catch(error){
+    catch (error) {
         console.error('Error checking if assigned:', error);
     }
 };
@@ -31,9 +32,10 @@ export const addMe = async (taskId: string) => {
         const original = await axios.get(`/api/tasks/${taskId}`);
         const task = original.data;
 
-        if (task.assigned.includes(myUsername)) return null;
+        if (task.assigned.some((assignee: Assignee) => assignee.name === myUsername))
+            return null;
 
-        const newAssigned = [...task.assigned, myUsername];
+        const newAssigned = [...task.assigned, { name: myUsername, assignedAt: new Date() }];
         const response = await axios.put(`/api/tasks/${taskId}`, {
             assigned: newAssigned
         });
@@ -62,7 +64,9 @@ const removeAssigned = async (taskId: string, usernameToRemove: string) => {
         const task = await original.data;
 
         // Remove the specified username from the assigned list
-        const updatedAssigned = task.assigned.filter((username: string) => username !== usernameToRemove);
+        const updatedAssigned = task.assigned.filter(
+            (assignee: Assignee) => assignee.name !== usernameToRemove
+        );
 
         // Update the task in the backend
         const response = await axios.put(`/api/tasks/${taskId}`, {
