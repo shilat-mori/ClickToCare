@@ -6,41 +6,22 @@ import { UserRole } from "@/app/types/userRole";
 import bcrypt from 'bcryptjs';
 import { SortOrder } from "mongoose";
 
-//add a new user - signUp
+//add a new user - when admin verifies the new user to regular user
 export async function POST(req: NextRequest) {
     try {
         //connect to mongoDB (the database)
         await connect();
         //get the user data
-        const { username, password, email } = await req.json();
-        // Check if the email already exists
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
-            return NextResponse.json({ error: "Email already exists" }, { status: 409 });
-        }
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const userInfo = await req.json();
         //create the new user and save to database
-        const newUser = new User({ username, password: hashedPassword, email, role: UserRole.unauthorized, score: 0 });
+        const newUser = new User({ ...userInfo, role: UserRole.authorized }); //about me and signUp time aren't needed
         await newUser.save();
-        //generate a token - unauthorized, since we just signed up
-        const token = await generateToken(newUser.username, UserRole.unauthorized);
-        // Set the token in a cookie
-        const response = NextResponse.json({ message: "User created successfully", user: newUser });
-        response.cookies.set("token", token, {
-            httpOnly: false, //for debugging, later change to true
-            sameSite: 'lax', // Allows cookies on same-site navigation - also for debugging
-            secure: process.env.NODE_ENV === "production",
-            path: "/",
-            maxAge: 60 * 60, // 1 hour
-        });
-
-        return response;
+        return NextResponse.json({ message: "User added successfully", user: newUser });
     } catch (error) {
-        return NextResponse.json("Error in creating user " + error);
+        return NextResponse.json("Error in adding user " + error);
     }
 };
 
-//get all users - used to verify login, and for the admin to get all unathorized users
 //sort - for score board 
 export async function GET(req: NextRequest) {
     try {
@@ -74,12 +55,7 @@ export async function PUT(req: NextRequest) {
             return NextResponse.json({ error: "User not found" }, { status: 404 });
         }
 
-        //if the username has an unathorized role, it means the admin wants to verify him
-        //since the user can not add or remove tasks when unathorized
-        if (role === UserRole.unauthorized) {
-            user.role = UserRole.authorized;
-        }
-        else {
+        if (role === UserRole.authorized) {
             // Update the score
             user.score += addition;
         }
