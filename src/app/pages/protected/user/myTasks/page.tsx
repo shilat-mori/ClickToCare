@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import ITask from '@/app/types/tasks';
 import { getMyTasks } from '@/app/services/getMyTasks';
 import TaskCard from '@/app/components/taskCard';
+import { Assignee } from '@/app/types/assignee';
 
 const MyTasks = () => {
   const [tasks, setTasks] = useState<ITask[]>([]);
@@ -18,7 +19,7 @@ const MyTasks = () => {
     fetchTasks();
   }, []);
 
-  const setAssigned = (taskId: string, updatedAssigned: string[]) => {
+  const setAssigned = (taskId: string, updatedAssigned: Assignee[]) => {
     setTasks((prevTasks) =>
       prevTasks.map((task) =>
         task._id === taskId ? { ...task, assigned: updatedAssigned } : task
