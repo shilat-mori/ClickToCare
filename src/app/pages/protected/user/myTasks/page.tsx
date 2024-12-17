@@ -34,7 +34,8 @@ const MyTasks = () => {
       ) : tasks.length > 0 ? (
         tasks.map((task) => (
           <div key={task._id} className="break-inside-avoid p-4 rounded">
-            <TaskCard taskInfo={task} setAssigned={setAssigned} />
+            {/* on delete do nothing - you are the user, you can't delete */}
+            <TaskCard taskInfo={task} setAssigned={setAssigned} onDelete={()=>{}}/>
           </div>
         ))
       ) : (

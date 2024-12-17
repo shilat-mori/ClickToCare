@@ -84,6 +84,10 @@ const PublicTasks = () => {
     );
   };
 
+  const removeTask = (taskId: string) => {
+    setTasks(prev => prev.filter(task => task._id !== taskId));
+  };
+
   return (
     <div>
       {navigation()}
@@ -94,7 +98,7 @@ const PublicTasks = () => {
           <div className="columns-3 gap-2">
             {tasks.map((task) => (
               <div key={task._id} className="break-inside-avoid p-4 rounded">
-                <TaskCard taskInfo={task} setAssigned={setAssigned} />
+                <TaskCard taskInfo={task} setAssigned={setAssigned} onDelete={removeTask}/>
               </div>
             ))}
           </div>
