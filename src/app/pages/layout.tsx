@@ -41,7 +41,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     </div>
                 )}
             </header>
-            <main className="overflow-auto bg-gray-100" style={{ paddingTop: `${headerHeight}px` }}>
+            <main className="h-screen overflow-auto bg-gray-100 " style={{ paddingTop: `${headerHeight}px` }}>
                 {children}
             </main>
         </div>

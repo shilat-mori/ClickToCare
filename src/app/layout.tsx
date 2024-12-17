@@ -8,8 +8,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <HeaderHeightProvider>
       <html lang="en">
-        <body>
-          <main>
+        <body >
+          <main className='h-screen'>
             {children}
           </main>
           <Script
