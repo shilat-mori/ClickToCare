@@ -6,7 +6,6 @@ import { Assignee } from '../types/assignee';
 //check if assigned to me
 export const assignedToMe = async (taskId: string) => {
     const myUsername = await getUsernameFromCookies();
-    console.log("username: ", myUsername);
     if (!myUsername) return false; //does not matter, both add and remove won't do anything for a not found user
     try {
         const original = await axios.get(`/api/tasks/${taskId}`);
@@ -20,15 +19,20 @@ export const assignedToMe = async (taskId: string) => {
 
 //remove assigned
 export const removeMe = async (taskId: string) => {
-    const myUsername = await getUsernameFromCookies();
-    if (!myUsername) return null;
-    return removeAssigned(taskId, myUsername);
+    try {
+        const myUsername = await getUsernameFromCookies();
+        if (!myUsername) return null;
+        return removeAssigned(taskId, myUsername);
+    } catch (error) {
+        console.error('Error finding username in cookies:', error);
+        return null;
+    }
 };
 
 //add assigned
 export const addMe = async (taskId: string) => {
-    const myUsername = await getUsernameFromCookies();
     try {
+        const myUsername = await getUsernameFromCookies();
         const original = await axios.get(`/api/tasks/${taskId}`);
         const task = original.data;
 
@@ -41,15 +45,12 @@ export const addMe = async (taskId: string) => {
         });
 
         //update user score
-        console.log(`addMe - username: ${myUsername}, addition: ${Number(task.points)}`);
         const userResponse = await axios.put('/api/users', {
             username: myUsername as string,
             addition: Number(task.points), //score is positive addition
         });
-        console.log(userResponse.data);
 
-        const updatedTask = response.data;
-        console.log(updatedTask);
+        const updatedTask = response.data.task;
         return updatedTask.assigned;
     } catch (error) {
         console.error('Error adding assigned user:', error);
@@ -74,15 +75,12 @@ const removeAssigned = async (taskId: string, usernameToRemove: string) => {
         });
 
         //update user score
-        console.log(`removedAssigned - username: ${usernameToRemove}, addition: ${-Number(task.points)}`);
         const userResponse = await axios.put('/api/users', {
             username: usernameToRemove as string,
             addition: -Number(task.points), //remove - the score is a negative addition
         });
-        console.log(userResponse.data);
 
-        const updatedTask = response.data;
-        console.log(updatedTask);
+        const updatedTask = response.data.task;
         return updatedTask.assigned;
     } catch (error) {
         console.error('Error removing assigned user:', error);
