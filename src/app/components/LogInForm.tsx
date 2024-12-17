@@ -6,7 +6,6 @@ import { useState } from "react";
 const LogInForm = () => {
   const schema = z.object({
     username: z.string().min(2, "Username must be at least 2 characters"),
-    email: z.string().email("Invalid email address"),
     password: z.string().min(3, "Password must be at least 3 characters"),
   });
   type INewUser = z.infer<typeof schema>;
@@ -24,12 +23,11 @@ const LogInForm = () => {
 
     const formData = new FormData();
     formData.append("username", data.username);
-    formData.append("email", data.email);
     formData.append("password", data.password);
 
     //TODO: fetch call for signing up
 
-    const res = await fetch("/api/signup", {
+    const res = await fetch("/api/login", {
       method: "POST",
       body: formData,
     });
@@ -53,16 +51,6 @@ const LogInForm = () => {
               {...register("username")}
             />
             {errors.username && <p>{errors.username.message}</p>}
-          </div>
-
-          <div className="flex flex-col">
-            <input
-              className="form-input"
-              placeholder="Email"
-              type="email"
-              {...register("email")}
-            />
-            {errors.email && <p>{errors.email.message}</p>}
           </div>
 
           <div className="flex flex-col">
