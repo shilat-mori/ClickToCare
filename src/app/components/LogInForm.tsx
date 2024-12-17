@@ -1,7 +1,10 @@
+"use client"
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const LogInForm = () => {
   const schema = z.object({
@@ -17,7 +20,9 @@ const LogInForm = () => {
     resolver: zodResolver(schema),
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [message, setMessage] = useState("");
 
+  const router = useRouter()
   const onSubmit = async (data: INewUser) => {
     setIsSubmitting(true);
 
@@ -27,17 +32,17 @@ const LogInForm = () => {
 
     //TODO: fetch call for signing up
 
-    const res = await fetch("/api/login", {
-      method: "POST",
-      body: formData,
-    });
-
-    if (res.ok) {
-      console.log("User registered successfully");
-    } else {
-      console.error("Error registering user");
+    try {
+      const response = await axios.post("/api/users", { formData });
+      if (response.data.error) {
+        setMessage(response.data.error);
+      } else {
+        //no need to check role here, we just created a new user, unauthorized
+        router.push("/pages/waiting/");
+      }
+    } catch (error) {
+      console.error("Error signing up", error);
     }
-
     setIsSubmitting(false);
   };
   return (
