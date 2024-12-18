@@ -1,9 +1,13 @@
+"use client"
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const SignUpForm = () => {
+  const router = useRouter();
   const schema = z
     .object({
       username: z.string().min(2, "Username must be at least 2 characters"),
@@ -39,7 +43,7 @@ const SignUpForm = () => {
     resolver: zodResolver(schema),
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const [message, setMessage] = useState("");
   const onSubmit = async (data: INewUser) => {
     setIsSubmitting(true);
 
@@ -52,22 +56,26 @@ const SignUpForm = () => {
 
     //TODO: fetch call for signing up
 
-    const res = await fetch("/api/signup", {
-      method: "POST",
-      body: formData,
-    });
-
-    if (res.ok) {
-      console.log("User registered successfully");
-    } else {
-      console.error("Error registering user");
+    try {
+      const response = await axios.post("/api/users", { formData });
+      if (response.data.error) {
+        setMessage(response.data.error);
+      } else {
+        //no need to check role here, we just created a new user, unauthorized
+        router.push("/pages/waiting/");
+      }
+    } catch (error) {
+      console.error("Error signing up", error);
     }
 
     setIsSubmitting(false);
   };
   return (
     <div className="form-box justify-center">
-      <form className="h-full flex flex-col justify-between" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="h-full flex flex-col justify-between"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div className="flex flex-col">
           <input
             className="form-input"
@@ -128,7 +136,11 @@ const SignUpForm = () => {
           />
         </div>
 
-        <button className="buttonStyle flex flex-col" type="submit" disabled={isSubmitting}>
+        <button
+          className="buttonStyle flex flex-col"
+          type="submit"
+          disabled={isSubmitting}
+        >
           {isSubmitting ? "Submitting..." : "Sign Up"}
         </button>
       </form>

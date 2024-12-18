@@ -8,11 +8,18 @@ import bcrypt from 'bcryptjs';
 export async function POST(req: NextRequest) {
     //connect to mongoDB (the database)
     await connect();
+    console.log('after connection the DB');
+    
+    const requ = await req
+    console.log("request: ",requ);
+    
     const { username, password } = await req.json();
-
+    console.log("request json: ", username, password);
     try {
         // Check if user exists
         const user = await User.findOne({ username });
+        console.log(user);
+        
         if (!user) {
             return NextResponse.json({ error: 'Username does not exist' }, { status: 401 });
         }
