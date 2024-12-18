@@ -3,6 +3,7 @@ export default interface INewUser {
   username: string;
   email: string;
   password: string;
-  faceImage: File | null
-  freeText: string; 
+  faceImage: File | null;
+  freeText: string;
+  signTime: Date;
 }
