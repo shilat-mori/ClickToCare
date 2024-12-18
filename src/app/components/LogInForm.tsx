@@ -5,6 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { getUserRoleFromCookies } from "../services/frontUtils";
+import { UserRole } from "../types/userRole";
 
 const LogInForm = () => {
   const schema = z.object({
@@ -42,7 +44,13 @@ const LogInForm = () => {
       } else {
         //no need to check role here, we just created a new user, unauthorized
         console.log(response.data);
-        // router.push("/pages/waiting/");
+        const role = await getUserRoleFromCookies();
+        if (!role)
+          router.push("/");
+        else if (role === UserRole.unauthorized)
+          router.push("/pages/waiting/");
+        else if (role > UserRole.unauthorized)
+          router.push("/pages/protected/publicTasks");
       }
     } catch (error) {
       console.error("Error signing up", error);
@@ -50,33 +58,33 @@ const LogInForm = () => {
     setIsSubmitting(false);
   };
   return (
-      <div className="form-box">
-        <form className="h-full flex flex-col justify-between" onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex">
-            <input
-              className="form-input"
-              placeholder="Username"
-              type="text"
-              {...register("username")}
-            />
-            {errors.username && <p>{errors.username.message}</p>}
-          </div>
+    <div className="form-box">
+      <form className="h-full flex flex-col justify-between" onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex">
+          <input
+            className="form-input"
+            placeholder="Username"
+            type="text"
+            {...register("username")}
+          />
+          {errors.username && <p>{errors.username.message}</p>}
+        </div>
 
-          <div className="flex flex-col">
-            <input
-              className="form-input"
-              placeholder="Password"
-              type="password"
-              {...register("password")}
-            />
-            {errors.password && <p>{errors.password.message}</p>}
-          </div>
+        <div className="flex flex-col">
+          <input
+            className="form-input"
+            placeholder="Password"
+            type="password"
+            {...register("password")}
+          />
+          {errors.password && <p>{errors.password.message}</p>}
+        </div>
 
-          <button className="buttonStyle flex flex-col" type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Logging..." : "Log In"}
-          </button>
-        </form>
-      </div>
+        <button className="buttonStyle flex flex-col" type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Logging..." : "Log In"}
+        </button>
+      </form>
+    </div>
   );
 };
 export default LogInForm;
