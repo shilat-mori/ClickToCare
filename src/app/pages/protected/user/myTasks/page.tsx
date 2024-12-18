@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import ITask from '@/app/types/tasks';
 import { getMyTasks } from '@/app/services/getMyTasks';
 import TaskCard from '@/app/components/taskCard';
+import { Assignee } from '@/app/types/assignee';
 
 const MyTasks = () => {
   const [tasks, setTasks] = useState<ITask[]>([]);
@@ -18,7 +19,7 @@ const MyTasks = () => {
     fetchTasks();
   }, []);
 
-  const setAssigned = (taskId: string, updatedAssigned: string[]) => {
+  const setAssigned = (taskId: string, updatedAssigned: Assignee[]) => {
     setTasks((prevTasks) =>
       prevTasks.map((task) =>
         task._id === taskId ? { ...task, assigned: updatedAssigned } : task
@@ -33,7 +34,8 @@ const MyTasks = () => {
       ) : tasks.length > 0 ? (
         tasks.map((task) => (
           <div key={task._id} className="break-inside-avoid p-4 rounded">
-            <TaskCard taskInfo={task} setAssigned={setAssigned} />
+            {/* on delete do nothing - you are the user, you can't delete */}
+            <TaskCard taskInfo={task} setAssigned={setAssigned} onDelete={()=>{}}/>
           </div>
         ))
       ) : (

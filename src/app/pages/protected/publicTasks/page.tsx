@@ -4,6 +4,7 @@ import { useHeaderHeight } from '@/app/context/HeaderHeightContext';
 import TaskCard from '@/app/components/taskCard';
 import ITask from '@/app/types/tasks';
 import axios from 'axios';
+import { Assignee } from '@/app/types/assignee';
 
 const PublicTasks = () => {
   const { headerHeight } = useHeaderHeight();
@@ -75,12 +76,16 @@ const PublicTasks = () => {
   );
 
   // Update the task assigned list in state when changes are made
-  const setAssigned = (taskId: string, updatedAssigned: string[]) => {
+  const setAssigned = (taskId: string, updatedAssigned: Assignee[]) => {
     setTasks((prevTasks) =>
       prevTasks.map((task) =>
         task._id === taskId ? { ...task, assigned: updatedAssigned } : task
       )
     );
+  };
+
+  const removeTask = (taskId: string) => {
+    setTasks(prev => prev.filter(task => task._id !== taskId));
   };
 
   return (
@@ -93,7 +98,7 @@ const PublicTasks = () => {
           <div className="columns-3 gap-2">
             {tasks.map((task) => (
               <div key={task._id} className="break-inside-avoid p-4 rounded">
-                <TaskCard taskInfo={task} setAssigned={setAssigned} />
+                <TaskCard taskInfo={task} setAssigned={setAssigned} onDelete={removeTask}/>
               </div>
             ))}
           </div>

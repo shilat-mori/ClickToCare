@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import SignUpForm from '../../components/SignUpForm'
 const Signup = () => {
+
   // const [username, setUsername] = useState('');
   // const [email, setEmail] = useState('');
   // const [password, setPassword] = useState('');

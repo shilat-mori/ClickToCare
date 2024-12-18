@@ -1,4 +1,3 @@
-import React from "react";
 import { UserRole } from "./userRole";
 
 export default interface IUser {

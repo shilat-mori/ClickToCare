@@ -4,5 +4,6 @@ export default interface INewUser {
   email: string;
   password: string;
   faceImage: File | null
-  freeText: string; 
+  freeText: string;
+  signTime: Date;
 }
