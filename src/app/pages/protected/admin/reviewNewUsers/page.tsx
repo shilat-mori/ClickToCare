@@ -1,8 +1,5 @@
 "use client"
 import NewUserCard from '@/app/components/newUserCard';
-import { UserRole } from '@/app/types/userRole';
-import IUser from '@/app/types/users';
-import INewUserReq from '@/app/types/newUser';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 import INewUser from '@/app/types/newUser';
@@ -23,7 +20,10 @@ const ReviewNewUsers = () => {
     fetchUsers();
   }, []);
 
-  console.log(users);
+  const userVerified = (userId: string) => {
+    setUsers(prev => prev.filter(user => user._id !== userId));
+  };
+
   return (
     <div>
       <h1>ReviewNewUsers</h1>
@@ -31,7 +31,7 @@ const ReviewNewUsers = () => {
         {users.length > 0 ? (
           users.map((user) => (
             <li key={user._id}>
-              <NewUserCard {...user} />
+              <NewUserCard userInfo={user} setVerified={userVerified} />
             </li>
           ))
         ) : (

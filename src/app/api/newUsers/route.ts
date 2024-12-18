@@ -13,28 +13,36 @@ export async function POST(req: NextRequest) {
         //connect to mongoDB (the database)
         await connect();
         //get the user data
-        const { username, email, password, faceImage, freeText } = await req.json();
-        console.log(`api/newUsers - username: ${username}, password: ${password}, email: ${email}, aboutMe: ${freeText}`)
+        const { data } = await req.json();
+
         // Check if the email already exists
         // on regular users
-        const existingUser = await User.findOne({ email });
+        const existingUser = await User.findOne({ email: data.email });
         if (existingUser) {
             return NextResponse.json({ error: "Email already exists" }, { status: 409 });
         }
         //on new users
-        const existingNewUser = await NewUser.findOne({ email });
+        const existingNewUser = await NewUser.findOne({ email: data.email });
         if (existingNewUser) {
             return NextResponse.json({ error: "Email already exists, wait to be approved" }, { status: 409 });
         }
 
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(data.password, 10);
         //create the new user and save to database
-        const newUser = new NewUser({ username, email, password: hashedPassword, faceImage, freeText, signTime: new Date() });
+        const newUser = new NewUser({
+            username: data.username,
+            email: data.email,
+            password: hashedPassword,
+            // faceImage: data.faceImage[0]
+            faceImage: null,
+            freeText: data.freeText,
+            signTime: new Date(),
+        });
         await newUser.save();
         //generate a token - unauthorized, since we just signed up
         const token = await generateToken(newUser.username, UserRole.unauthorized);
         // Set the token in a cookie
-        const response = NextResponse.json({ message: "User created successfully", user: newUser });
+        const response = NextResponse.json({ message: "New user created successfully", user: newUser });
         response.cookies.set("token", token, {
             httpOnly: false, //for debugging, later change to true
             sameSite: 'lax', // Allows cookies on same-site navigation - also for debugging
@@ -45,7 +53,7 @@ export async function POST(req: NextRequest) {
 
         return response;
     } catch (error) {
-        return NextResponse.json("Error in creating user " + error);
+        return NextResponse.json({ error: 'Error in creating new user' }, { status: 500 });
     }
 };
 
@@ -56,7 +64,7 @@ export async function GET(req: NextRequest) {
         // Extract query params
         const sortCriteria: { signTime: SortOrder } = { signTime: 'asc' }; //show oldest req first
 
-        const users = await User.find().sort(sortCriteria);
+        const users = await NewUser.find().sort(sortCriteria);
         return NextResponse.json(users);
     } catch (error) {
         return NextResponse.json({ error: "Error in fetching new users " + error });

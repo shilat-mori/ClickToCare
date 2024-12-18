@@ -1,6 +1,6 @@
-import IUser from "./users";
+import INewUser from "./newUser";
 
 export default interface NewUserCardProps {
-    userInfo: IUser;
-    aboutMe: string;
+    userInfo: INewUser;
+    setVerified: (taskId: string) => void;
 }

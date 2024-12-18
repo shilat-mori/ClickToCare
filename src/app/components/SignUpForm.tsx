@@ -57,7 +57,7 @@ const SignUpForm = () => {
     //TODO: fetch call for signing up
 
     try {
-      const response = await axios.post("/api/users", { formData });
+      const response = await axios.post("/api/newUsers", { data });
       if (response.data.error) {
         setMessage(response.data.error);
       } else {

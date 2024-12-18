@@ -12,13 +12,19 @@ export async function POST(req: NextRequest) {
         //connect to mongoDB (the database)
         await connect();
         //get the user data
-        const userInfo = await req.json();
+        const user = await req.json();
         //create the new user and save to database
-        const newUser = new User({ ...userInfo, role: UserRole.authorized, score: 0 }); //about me and signUp time aren't needed
+        const newUser = new User({
+            username: user.username,
+            email: user.email,
+            password: user.password,
+            role: UserRole.authorized,
+            score: 0
+        }); //about me, face image and signUp time aren't needed
         await newUser.save();
         return NextResponse.json({ message: "User added successfully", user: newUser });
     } catch (error) {
-        return NextResponse.json("Error in adding user " + error);
+        return NextResponse.json({ error: "Error in adding user " + error });
     }
 };
 
@@ -43,8 +49,6 @@ export async function PUT(req: NextRequest) {
     try {
         await connect();
         const { username, addition, role } = await req.json();
-
-        console.log(`PUT on api/users/ - username: ${username}, addition: ${addition}`);
 
         if (!username) {
             return NextResponse.json({ error: "Username is required" }, { status: 400 });
