@@ -11,19 +11,19 @@ const LogInForm = () => {
     username: z.string().min(2, "Username must be at least 2 characters"),
     password: z.string().min(3, "Password must be at least 3 characters"),
   });
-  type INewUser = z.infer<typeof schema>;
+  type zUser = z.infer<typeof schema>;
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<INewUser>({
+  } = useForm<zUser>({
     resolver: zodResolver(schema),
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState("");
 
   const router = useRouter()
-  const onSubmit = async (data: INewUser) => {
+  const onSubmit = async (data: zUser) => {
     setIsSubmitting(true);
 
     const formData = new FormData();
@@ -33,12 +33,16 @@ const LogInForm = () => {
     //TODO: fetch call for signing up
 
     try {
-      const response = await axios.post("/api/users", { formData });
+      const username = formData.get("username") as string;
+      const password = formData.get("password") as string;
+      const response = await axios.post("/api/login", { username, password });
       if (response.data.error) {
         setMessage(response.data.error);
+        alert(response.data.error);
       } else {
         //no need to check role here, we just created a new user, unauthorized
-        router.push("/pages/waiting/");
+        console.log(response.data);
+        // router.push("/pages/waiting/");
       }
     } catch (error) {
       console.error("Error signing up", error);
