@@ -29,3 +29,9 @@
     animation: bounce-in 1.2s ease-out forwards;
   }
   
+.form-box{
+  @apply h-full w-80 sticky m-auto  flex flex-col justify-center bg-white p-10 shadow-2xl transform transition-all duration-300
+}  
+.form-input {
+  @apply w-full p-2 border border-gray-300 rounded
+}

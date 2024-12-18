@@ -1,9 +1,9 @@
-import IUser from "./users";
-
-//this data is only used for new users, until there are validated by admin
 export default interface INewUser {
-    _id: string;
-    userInfo: IUser
-    aboutMe: string;
-    signTime: Date;
+  _id: string;
+  username: string;
+  email: string;
+  password: string;
+  faceImage: File | null
+  freeText: string;
+  signTime: Date;
 }
