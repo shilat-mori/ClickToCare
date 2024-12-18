@@ -1,3 +1,5 @@
+import { Assignee } from "./assignee";
+
 export default interface ITask {
     _id: string;
     name: string;
@@ -5,7 +7,7 @@ export default interface ITask {
     category: string;
     points: number;
     assigned_max: number;
-    assigned: string[];
+    assigned: Assignee[];
     creation_time: Date;
     end_time: Date;
 }

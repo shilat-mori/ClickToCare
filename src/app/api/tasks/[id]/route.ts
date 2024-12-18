@@ -29,6 +29,13 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
         // Get the new data from the request body
         const { assigned } = await req.json();
 
+        if (!Array.isArray(assigned) || !assigned.every(a => a.name && a.assignedAt)) {
+            return NextResponse.json(
+                { error: "Invalid assigned data structure" },
+                { status: 400 }
+            );
+        }
+
         // Find and update the task by ID
         const updatedTask = await Task.findByIdAndUpdate(
             params.id,

@@ -1,5 +1,6 @@
 import mongoose, {Model, Schema} from 'mongoose';
 import ITask from '@/app/types/tasks';
+import AssigneeSchema from './assigneeSchema';
 
 const TaskSchema: Schema<ITask> = new Schema({
     name: { type: String, required: true },
@@ -7,7 +8,7 @@ const TaskSchema: Schema<ITask> = new Schema({
     category: { type: String, required: true },
     points: { type: Number, required: true },
     assigned_max: {type: Number, required: true, default: 1},
-    assigned: { type: [String], default: [] },
+    assigned: { type: [AssigneeSchema], default: [] },
     creation_time: { type: Date, default: Date.now },
     end_time: { type: Date, required: true }
 });

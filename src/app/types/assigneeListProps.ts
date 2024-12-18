@@ -1,4 +1,6 @@
+import { Assignee } from "./assignee";
+
 export default interface AssigneeListProps {
-    assigned: string[];
+    assigned: Assignee[];
     maxAssignees: number;
 }

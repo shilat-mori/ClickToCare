@@ -27,7 +27,7 @@ const categoryColor = (category: string) => {
     }
 }
 
-const TaskCard: React.FC<CardProps> = ({ taskInfo, setAssigned }) => {
+const TaskCard: React.FC<CardProps> = ({ taskInfo, setAssigned, onDelete }) => {
     const { base, tag } = categoryColor(taskInfo.category);
     const [role, setRole] = useState<UserRole | null>(null);
     const [isAssigned, setIsAssigned] = useState<boolean | null>(null);
@@ -69,6 +69,13 @@ const TaskCard: React.FC<CardProps> = ({ taskInfo, setAssigned }) => {
         setIsAssigned(false); // Update state to reflect unassignment
     };
 
+    const handleDelete = async () => {
+    const success = await deleteTask(taskInfo._id);
+    if (success) {
+        onDelete(taskInfo._id);
+    }
+};
+
     const renderActionButtons = () => {
         if (!role) {
             return <div>Loading...</div>;
@@ -77,7 +84,7 @@ const TaskCard: React.FC<CardProps> = ({ taskInfo, setAssigned }) => {
             return (
                 <div>
                     <button className={`${buttonStyle} bg-orange-300`}>Edit</button>
-                    <button onClick={() => deleteTask(taskInfo._id)} className={`${buttonStyle} bg-red-400`}>Delete</button>
+                    <button onClick={handleDelete} className={`${buttonStyle} bg-red-400`}>Delete</button>
                 </div>
             );
         }
