@@ -23,7 +23,8 @@ const Scores = () => {
     fetchUsers();
   }, []);
 
-  console.log(users);
+  //map all users to their score or zero. on the scores array, find max.
+  const maxScore = Math.max(...users.map((user) => user.score || 0));
   return (
     <div>
       <h1>Score Board:</h1>
@@ -31,7 +32,7 @@ const Scores = () => {
         {users.length > 0 ? (
           users.map((user) => (
             <li key={user._id}>
-               <UserScoreCard {...user}/>
+               <UserScoreCard {...user} isMax={user.score === maxScore}/>
             </li>
           ))
         ) : (
