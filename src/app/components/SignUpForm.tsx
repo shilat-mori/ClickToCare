@@ -53,16 +53,21 @@ const SignUpForm = () => {
     formData.append("password", data.password);
     formData.append("faceImage", data.faceImage[0]); // Append the file
     if (data.freeText) formData.append("freeText", data.freeText);
+    console.log(formData.keys());
 
-    //TODO: fetch call for signing up
-
+    console.log("before axios");
+    console.log("Keys:", Array.from(formData.keys()));
     try {
-      const response = await axios.post("/api/users", { formData });
+      const response = await axios.post("/api/newUsers", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       if (response.data.error) {
         setMessage(response.data.error);
       } else {
-        //no need to check role here, we just created a new user, unauthorized
-        router.push("/pages/waiting/");
+        // router.push("/pages/waiting/");
+        console.log("signed successfully");
       }
     } catch (error) {
       console.error("Error signing up", error);
