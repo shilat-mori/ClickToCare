@@ -2,8 +2,8 @@
 import { getMyTasks } from '@/app/services/getMyTasks';
 import ITask from '@/app/types/tasks';
 import React, { useEffect, useState } from 'react'
-import { TasksByDayProps } from '../types/taskByDayProps';
-import { getUsernameFromCookies } from '../services/frontUtils';
+import { TasksByDayProps } from '@/app/types/taskByDayProps';
+import { getUsernameFromCookies } from '@/app/services/frontUtils';
 
 const TasksByDay: React.FC<TasksByDayProps> = ({ range }) => {
     const [tasks, setTasks] = useState<ITask[]>([]);
