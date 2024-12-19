@@ -1,21 +1,25 @@
 "use client"
 import axios from 'axios';
-import NewUser from '../lib/models/newUserSchema';
 
 export const verifyUser = async (userId: string) => {
     try {
         //add newUser to all users
         //get user from newUser cluster
         const { data: newUser } = await axios.get(`/api/newUsers/${userId}`);
-        if (!newUser || !newUser.userInfo) {
+        if (!newUser) {
             console.error("User info not found in newUsers collection.");
             return;
         }
+        const user = {
+            username: newUser.username,
+            email: newUser.email,
+            password: newUser.password,
+        };
         //add the user info to the users cluster
-        const resonseAdd = await axios.post('/api/users', newUser.userInfo);
+        const responseAdd = await axios.post('/api/users', user);
         //remove user from newUser cluster
         const responseRemove = await axios.delete(`/api/newUsers/${userId}`);
-        console.log('User Added:', resonseAdd.data);
+        console.log('User Added:', responseAdd.data);
         console.log('NewUser Removed:', responseRemove.data);
     } catch (error) {
         console.error('Error verifying a user: ', error);
