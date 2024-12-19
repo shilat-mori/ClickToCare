@@ -17,14 +17,24 @@ export async function POST(req: NextRequest) {
 
         // Check if the email already exists
         // on regular users
-        const existingUser = await User.findOne({ email: data.email });
+        const existingUser = await User.findOne({
+            $or: [
+                { email: data.email },
+                { username: data.username }
+            ]
+        });
         if (existingUser) {
-            return NextResponse.json({ error: "Email already exists" }, { status: 409 });
+            return NextResponse.json({ error: "Email or username already exists" }, { status: 409 });
         }
         //on new users
-        const existingNewUser = await NewUser.findOne({ email: data.email });
+        const existingNewUser = await NewUser.findOne({
+            $or: [
+                { email: data.email },
+                { username: data.username }
+            ]
+        });
         if (existingNewUser) {
-            return NextResponse.json({ error: "Email already exists, wait to be approved" }, { status: 409 });
+            return NextResponse.json({ error: "Email or username already exists, wait to be approved" }, { status: 409 });
         }
 
         const hashedPassword = await bcrypt.hash(data.password, 10);
