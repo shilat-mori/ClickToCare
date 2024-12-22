@@ -48,7 +48,7 @@ export async function GET(req: NextRequest) {
 export async function PUT(req: NextRequest) {
     try {
         await connect();
-        const { username, addition, role } = await req.json();
+        const { username, addition } = await req.json();
 
         if (!username) {
             return NextResponse.json({ error: "Username is required" }, { status: 400 });
@@ -59,10 +59,10 @@ export async function PUT(req: NextRequest) {
             return NextResponse.json({ error: "User not found" }, { status: 404 });
         }
 
-        if (role === UserRole.authorized) {
-            // Update the score
-            user.score += addition;
-        }
+
+        // Update the score
+        user.score += addition;
+
 
         await user.save();
         return NextResponse.json({ message: "User updated successfully", user });
