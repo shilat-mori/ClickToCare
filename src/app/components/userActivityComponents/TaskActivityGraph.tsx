@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { getMyTasks } from '@/app/services/getMyTasks';
 import ITask from '@/app/types/tasks';
-import { getUsernameFromCookies } from '../services/frontUtils';
+import { getUsernameFromCookies } from '@/app/services/frontUtils';
 
 const TaskActivityGraph = ({ view = 'week' }: { view: 'week' | 'month' }) => {
     const [tasks, setTasks] = useState<ITask[]>([]);
@@ -78,20 +78,6 @@ const TaskActivityGraph = ({ view = 'week' }: { view: 'week' | 'month' }) => {
         });
 
         return grouped;
-    };
-
-    // For rendering by week or month
-    const filterDataByTimeFrame = (data: any[]) => {
-        const today = new Date();
-        const startDate = new Date();
-
-        if (view === 'week') {
-            startDate.setDate(today.getDate() - 7);
-        } else {
-            startDate.setMonth(today.getMonth() - 1);
-        }
-        startDate.setHours(0, 0, 0, 0);
-        return (data.filter(item => new Date(item.date) >= startDate));
     };
 
     const groupedData = groupByDay();

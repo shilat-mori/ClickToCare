@@ -100,9 +100,20 @@ export async function POST(req: NextRequest) {
 
 //get all - for admin/ see all new users
 export async function GET(req: NextRequest) {
+  console.log("api/newUsers - get");
   try {
     await connect();
     // Extract query params
+    const username = req.nextUrl.searchParams.get("username");
+    console.log("api/newUsers - get - username: ", username);
+    //if search for a specific user
+    if (username) {
+      const user = await NewUser.find({ username });
+      console.log("api/newUsers - get - user: ", user);
+      return NextResponse.json(user || { error: "User not found" });
+    }
+
+    //otherwise, return all
     const sortCriteria: { signTime: SortOrder } = { signTime: "asc" }; //show oldest req first
 
     const users = await NewUser.find().sort(sortCriteria);

@@ -1,12 +1,7 @@
-"use client"
-import { useState } from 'react';
-import axios from 'axios';
-import { useRouter } from 'next/navigation';
-import SignUpForm from '../../components/SignUpForm'
+"use client";
+import SignUpForm from "../../components/SignUpForm";
 const Signup = () => {
-  return (
-      <SignUpForm/>
-  );
+  return <SignUpForm />;
 };
 
 export default Signup;

@@ -1,6 +1,6 @@
 "use client"
-import TaskActivityGraph from '@/app/components/TaskActivityGraph';
-import TasksByDay from '@/app/components/taskByDay';
+import TaskActivityGraph from '@/app/components/userActivityComponents/TaskActivityGraph';
+import TasksByDay from '@/app/components/userActivityComponents/taskByDay';
 import React, { useState } from 'react'
 
 const MyActivity = () => {
