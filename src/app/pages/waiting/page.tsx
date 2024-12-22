@@ -22,7 +22,7 @@ const Waiting = () => {
 
   const renderer = ({ days, hours, minutes, seconds, completed }: CountdownRenderProps) => {
     if (completed) {
-      return <span className="text-2xl font-bold text-red-500">Time's up!</span>;
+      return <span className="text-2xl font-bold text-red-500">Time&#39;s up!</span>;
     } else {
       return (
         <div className="flex gap-4 text-center">
