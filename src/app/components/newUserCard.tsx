@@ -1,6 +1,6 @@
 "use client"
 import React from "react"
-import { verifyUser } from "../services/verifyUser"
+import { verifyUser, rejectUser } from "../services/verifyUser"
 import NewUserCardProps from "../types/newUserCardProps"
 
 const NewUserCard: React.FC<NewUserCardProps> = ({ userInfo, setVerified }) => {
@@ -13,13 +13,21 @@ const NewUserCard: React.FC<NewUserCardProps> = ({ userInfo, setVerified }) => {
             <div>{userInfo.faceImage ? "has image" : "no image"}</div>
             <div>Added on: {new Date(userInfo.signTime).toLocaleString()}</div>
             <div className="flex justify-end w-full">
-                <button
+            <button
                     onClick={async () => {
                         await verifyUser(userInfo._id);
                         setVerified(userInfo._id);
                     }}
                     className="bg-sky-500 text-white px-4 py-2 rounded">
                     Verify User
+                </button>
+                <button
+                    onClick={async () => {
+                        await rejectUser(userInfo._id);
+                        setVerified(userInfo._id);
+                    }}
+                    className="bg-red-400 text-white px-4 py-2 rounded">
+                    Reject User
                 </button>
             </div>
         </div>
