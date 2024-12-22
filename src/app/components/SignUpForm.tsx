@@ -6,6 +6,10 @@ import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
+const errorMessage = ()=>{
+  //TODO pop up message about the error.
+}
+
 const SignUpForm = () => {
   const router = useRouter();
   const schema = z
@@ -64,16 +68,19 @@ const SignUpForm = () => {
         },
       });
       if (response.data.error) {
-        setMessage(response.data.error);
+        //TODO errorMessage call
       } else {
         // router.push("/pages/waiting/");
         console.log("signed successfully");
+        setMessage(response.data.error);
       }
+      setIsSubmitting(false);
     } catch (error) {
       console.error("Error signing up", error);
+      //TODO errorMessage call
     }
 
-    setIsSubmitting(false);
+    
   };
   return (
     <div className="form-box justify-center">

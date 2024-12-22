@@ -1,0 +1,56 @@
+export async function POST(req: NextRequest, res: NextResponse) {
+    try {
+        // connect to MongoDB (the database)
+        await connect();
+
+        // get the data from the request body
+        const formData = await req.formData(); // Use formData directly
+        const file = formData.get('faceImage'); // Adjust the field name as necessary
+
+        if (!file) {
+            return NextResponse.json({ error: "No face image found in the request."}, {status:500});
+        }
+
+        // Process the file or other fields
+        const fields = Object.fromEntries(formData.entries());
+
+        console.log("Fields:", fields);
+        console.log("Files:", file);
+
+        // Check if the email already exists 
+        // const existingUser = await User.findOne({ email: fields.email });
+        // if (existingUser) {
+        //     return NextResponse.json({ error: "Email already exists" }, { status: 409 });
+        // }
+
+        // Create a new user (pseudo-code)
+        // const hashedPassword = await bcrypt.hash(fields.password, 10);
+        // const newUser = new User({ ...fields, password: hashedPassword, signTime: new Date() });
+        // await newUser.save();
+
+        // Generate a token
+        // const token = await generateToken(newUser.username, UserRole.unauthorized);
+
+        // Set the token in a cookie
+        // const response = NextResponse.json({ message: "User created successfully", user: newUser });
+        // response.cookies.set("token", token, {
+        //     httpOnly: false, // for debugging, later change to true
+        //     sameSite: 'lax', // Allows cookies on same-site navigation - also for debugging
+        //     secure: process.env.NODE_ENV === "production",
+        //     path: "/",
+        //     maxAge: 60 * 60, // 1 hour
+        // });
+
+        // return response;
+        return NextResponse.json({ message: "User created successfully" }); // or another appropriate response
+
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error("Error in creating user: ", error.message);
+            return NextResponse.json({ error: "Error in creating user", details: error.message }, { status: 500 });
+        } else {
+            console.error("Unknown error:", error);
+            return NextResponse.json({ error: "Unknown error occurred" }, { status: 500 });
+        }    }
+}
+

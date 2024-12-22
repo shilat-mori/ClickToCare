@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     if (!file) {
       return NextResponse.json(
         { error: "No face image found in the request." },
-        { status: 500 }
+        { status: 501 }
       );
     }
 
@@ -98,7 +98,7 @@ export async function POST(req: NextRequest) {
   }
 }
 
-//get all - for adim/ see all new users
+//get all - for admin/ see all new users
 export async function GET(req: NextRequest) {
   try {
     await connect();
