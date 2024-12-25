@@ -42,7 +42,6 @@ const LogInForm = () => {
         setMessage(response.data.error);
         alert(response.data.error);
       } else {
-        //no need to check role here, we just created a new user, unauthorized
         console.log(response.data);
         const role = await getUserRoleFromCookies();
         if (!role)

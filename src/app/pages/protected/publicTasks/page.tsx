@@ -5,6 +5,7 @@ import TaskCard from '@/app/components/taskCard';
 import ITask from '@/app/types/tasks';
 import axios from 'axios';
 import { Assignee } from '@/app/types/assignee';
+import Masonry from 'react-masonry-css';
 
 const PublicTasks = () => {
   const { headerHeight } = useHeaderHeight();
@@ -21,7 +22,7 @@ const PublicTasks = () => {
     const fetchTasks = async () => {
       try {
         const response = await axios.get<ITask[]>('/api/tasks', {
-          params: { category, sortBy, order },
+          params: { category, sortBy, order, status: "running" },
         });
         setTasks(response.data);
       } catch (error) {
@@ -88,6 +89,12 @@ const PublicTasks = () => {
     setTasks(prev => prev.filter(task => task._id !== taskId));
   };
 
+  const breakpointColumnsObj = {
+    default: 3, // 3 columns for large screens
+    1100: 2,    // 2 columns for medium screens
+    700: 1,     // 1 column for small screens
+  };
+
   return (
     <div>
       {navigation()}
@@ -95,13 +102,19 @@ const PublicTasks = () => {
         {tasks.length === 0 ? (
           <p>No tasks available.</p>
         ) : (
-          <div className="columns-3 gap-2">
-            {tasks.map((task) => (
-              <div key={task._id} className="break-inside-avoid p-4 rounded">
-                <TaskCard taskInfo={task} setAssigned={setAssigned} onDelete={removeTask}/>
+          // <div className="grid grid-cols-3 auto-rows-auto gap-4">
+          <Masonry
+            breakpointCols={breakpointColumnsObj}
+            className="flex gap-4"
+            columnClassName="masonry-column"
+          >
+            {tasks.map((task: ITask) => (
+              <div key={task._id} className="p-4 rounded">
+                <TaskCard taskInfo={task} setAssigned={setAssigned} onDelete={removeTask} />
               </div>
             ))}
-          </div>
+            {/* </div> */}
+          </Masonry>
         )}
       </div>
     </div>
