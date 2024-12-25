@@ -1,37 +1,68 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-  
 
-  @keyframes bounce-in {
-    0% {
-      transform: scale(0.5) translateY(-200px);
-      opacity: 0;
-    }
-    50% {
-      transform: scale(1.2) translateY(20px);
-      opacity: 1;
-    }
-    100% {
-      transform: scale(1) translateY(0);
-    }
+@keyframes bounce-in {
+  0% {
+    transform: scale(0.5) translateY(-200px);
+    opacity: 0;
   }
-  
-  .logo-bounce {
-    animation: bounce-in 1.2s ease-out forwards;
+  50% {
+    transform: scale(1.2) translateY(20px);
+    opacity: 1;
   }
-  
-.buttonStyle{
-    @apply flex bg-sky-500 w-20 justify-center text-white p-2 rounded m-2 shadow-md shadow-black
+  100% {
+    transform: scale(1) translateY(0);
+  }
+}
+
+.action_button {
+  @apply text-white p-2 rounded mx-4;
+}
+
+.bordered {
+  @apply border border-gray-500;
+}
+
+.logo-bounce {
+  animation: bounce-in 1.2s ease-out forwards;
+}
+
+.buttonStyle {
+  @apply flex bg-sky-500 w-20 justify-center text-white p-2 rounded m-2 shadow-md shadow-black;
 }
 
 .button-bounce {
-    animation: bounce-in 1.2s ease-out forwards;
-  }
-  
-.form-box{
-  @apply h-full w-80 sticky m-auto  flex flex-col justify-center bg-white p-10 shadow-2xl transform transition-all duration-300
-}  
+  animation: bounce-in 1.2s ease-out forwards;
+}
+
+.form-box {
+  @apply h-full w-80 sticky m-auto  flex flex-col justify-center bg-white p-10 shadow-2xl transform transition-all duration-300;
+}
 .form-input {
-  @apply w-full p-2 border border-gray-300 rounded
+  @apply w-full p-2 border border-gray-300 rounded;
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+.navbar_blocks {
+  @apply flex justify-between items-center;
+}
+.btn {
+  @apply text-white p-2 rounded m-2;
+}
+.navbar_buttons {
+  @apply btn bg-sky-500 ;
+}
+
+.blue-button {
+  @apply btn bg-sky-500 px-4 py-2;
+}
+
+.red-button {
+  @apply btn bg-red-400 px-4 py-2;
 }

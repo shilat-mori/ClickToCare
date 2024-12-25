@@ -70,9 +70,10 @@ const SignUpForm = () => {
       if (response.data.error) {
         //TODO errorMessage call
       } else {
-        // router.push("/pages/waiting/");
+        
         console.log("signed successfully");
         setMessage(response.data.error);
+        router.push("/pages/waiting/");
       }
       setIsSubmitting(false);
     } catch (error) {

@@ -67,7 +67,7 @@ export async function getUsernameFromCookies(): Promise<string | null> {
     }
 };
 
-//remove token - for debugging?
+//remove token
 export const removeToken = () => {
     // Set the cookie with an expired date to delete it
     document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";

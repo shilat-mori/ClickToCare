@@ -22,6 +22,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         router.push('/');
     };
 
+    const handleNavigator = (nav:string)=>{
+        setOpenMenu(false)
+        router.push(nav)
+    }
+
     return (
         <div>
             <header id="header" className="fixed top-0 left-0 right-0 bg-sky-400 text-white p-4 z-20">
@@ -37,7 +42,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 </div>
                 {openMenu && (
                     <div className="mt-4">
-                        <NavBar />
+                        <NavBar handleNavigator={handleNavigator}/>
                     </div>
                 )}
             </header>
