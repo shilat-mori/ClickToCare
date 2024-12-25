@@ -3,11 +3,14 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { getUserRoleFromCookies } from "../services/frontUtils";
 import { UserRole } from "../types/userRole";
+import { NextResponse } from "next/server";
 
+//learn code
+ 
 const LogInForm = () => {
   const schema = z.object({
     username: z.string().min(2, "Username must be at least 2 characters"),
@@ -32,8 +35,6 @@ const LogInForm = () => {
     formData.append("username", data.username);
     formData.append("password", data.password);
 
-    //TODO: fetch call for signing up
-
     try {
       const username = formData.get("username") as string;
       const password = formData.get("password") as string;
@@ -52,7 +53,9 @@ const LogInForm = () => {
           router.push("/pages/protected/publicTasks");
       }
     } catch (error) {
-      console.error("Error signing up", error);
+      console.log(error);
+      const axiosError = error as AxiosError;
+      
     }
     setIsSubmitting(false);
   };

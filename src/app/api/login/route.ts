@@ -10,8 +10,6 @@ import { UserRole } from "@/app/types/userRole";
 export async function POST(req: NextRequest) {
     //connect to mongoDB (the database)
     await connect();
-    console.log('after connection the DB');
-
     const requ = await req
     console.log("request: ", requ);
 

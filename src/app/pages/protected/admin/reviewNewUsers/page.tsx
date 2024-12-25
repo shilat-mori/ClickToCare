@@ -26,7 +26,6 @@ const ReviewNewUsers = () => {
 
   return (
     <div>
-      <h1>ReviewNewUsers</h1>
       <ul>
         {users.length > 0 ? (
           users.map((user) => (
