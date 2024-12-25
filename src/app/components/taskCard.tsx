@@ -28,10 +28,10 @@ const categoryColor = (category: string) => {
 }
 
 const TaskCard: React.FC<CardProps> = ({ taskInfo, setAssigned, onDelete }) => {
+    //set card colors according to category
     const { base, tag } = categoryColor(taskInfo.category);
     const [role, setRole] = useState<UserRole | null>(null);
     const [isAssigned, setIsAssigned] = useState<boolean | null>(null);
-    const buttonStyle = "text-white p-2 rounded mx-4";
 
     useEffect(() => {
         const fetchRole = async () => {
@@ -83,26 +83,29 @@ const TaskCard: React.FC<CardProps> = ({ taskInfo, setAssigned, onDelete }) => {
         if (role === UserRole.admin) {
             return (
                 <div>
-                    <button className={`${buttonStyle} bg-orange-300`}>Edit</button>
-                    <button onClick={handleDelete} className={`${buttonStyle} bg-red-400`}>Delete</button>
+                    <button className={`action_button bg-orange-300`}>Edit</button>
+                    <button onClick={handleDelete} className={`action_button bg-red-400`}>Delete</button>
                 </div>
             );
         }
         if (role === UserRole.authorized) {
+            
+
             if (isAssigned === null) {
                 return <div>Loading...</div>;
             }
             if (isAssigned) {
-                return <button onClick={handleRemove} className={`${buttonStyle} bg-red-400`}>Remove me</button>
+                return <button onClick={handleRemove} className={`action_button bg-red-400`}>Remove me</button>
             } else {
-                return <button onClick={handleAssign} className={`${buttonStyle} bg-sky-300`}>Add Me!</button>
+                if(taskInfo.assigned.length>=taskInfo.assigned_max) return <div className='text-center bg-white bg-opacity-40 rounded-md'>Full</div>
+                return <button onClick={handleAssign} className={`action_button bg-sky-400`}>Add Me!</button>
             }
         }
         return <div>No actions available</div>;
     };
 
     return (
-        <div className={`relative border-2 border-gray-500 p-4 pt-10 rounded-xl ${base}`}>
+        <div className={`relative shadow-lg shadow-slate-300 p-4 pt-10 rounded-xl ${base}`}>
             {/* Category Tag */}
             <span
                 className={`absolute top-2 right-2 px-3 py-1 text-sm font-semibold border rounded-full ${tag}`}>

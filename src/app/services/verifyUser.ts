@@ -1,6 +1,8 @@
 "use client";
 import axios from "axios";
 
+//learn code
+ 
 export const verifyUser = async (userId: string) => {
   try {
     //add newUser to all users
@@ -27,8 +29,10 @@ export const verifyUser = async (userId: string) => {
 };
 
 export const rejectUser = async (userId: string) => {
+  //TODO: change newUser cluster to have rejected field
+  
   try {
-    //add newUser to all users
+    //delete newUser to all users
     //get user from newUser cluster
     const { data: newUser } = await axios.get(`/api/newUsers/${userId}`);
     if (!newUser) {

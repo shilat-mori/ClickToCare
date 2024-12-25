@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import TimeTrackerProps from "../types/timeTrackerProps";
-
+ 
 const formatTime = (seconds: number) => {
   const days = Math.floor(seconds / (60 * 60 * 24));
   const hours = Math.floor((seconds % (60 * 60 * 24)) / (60 * 60));
@@ -37,10 +37,8 @@ const TimeTracker: React.FC<TimeTrackerProps> = ({ totalTime, endTime }) => {
   const percentage = Math.max((timeRemaining / totalTime) * 100 * 1000, 0); //total(ms), remaining(s)
 
   const getColor = () => {
-    // if (timeRemaining <= 3 * 60 * 60) return "red";
-    // if (timeRemaining <= 24 * 60 * 60) return "orange";
-    if (timeRemaining <= 60) return "red";
-    if (timeRemaining <= 2 * 60) return "orange";
+    if (timeRemaining <= 3 * 60 * 60) return "red";
+    if (timeRemaining <= 24 * 60 * 60) return "orange";
     return "green";
   };
 
@@ -52,7 +50,7 @@ const TimeTracker: React.FC<TimeTrackerProps> = ({ totalTime, endTime }) => {
         styles={buildStyles({
           pathColor: getColor(),
           textColor: getColor(),
-          trailColor: "#d6d6d6",
+          trailColor: "#d6d6d670",
           textSize: "16px",
         })}
       />

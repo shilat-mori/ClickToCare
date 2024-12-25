@@ -7,15 +7,15 @@ const AssigneeList: React.FC<AssigneeListProps> = ({ assigned, maxAssignees }) =
     return (
         <div>
             <p>Available: {emptySlots}/{maxAssignees}</p>
-            <table className="table-auto border-collapse border border-gray-500 w-full">
+            <table className="bordered table-auto w-full">
                 <tbody>
                     {assigned.map((assignee, index) => (
-                        <tr key={index} className="border border-gray-500">
+                        <tr key={index} className="bordered">
                             <td className="p-2">{assignee.name}</td>
                         </tr>
                     ))}
                     {Array.from({ length: emptySlots }, (_, index) => (
-                        <tr key={`empty-${index}`} className="border border-gray-500">
+                        <tr key={`empty-${index}`} className="bordered">
                             <td className="p-2 text-gray-400">—</td>
                         </tr>
                     ))}
