@@ -3,9 +3,9 @@
 //determine the status of task (done means those that should be deleted)
 export function getStatusFilter(status: string) {
     const now = new Date();
-    const today = new Date(now.setHours(0, 0, 0, 0));
+    const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
     const oneMonthAgo = new Date(today);
-    oneMonthAgo.setMonth(today.getMonth() - 1);
+    oneMonthAgo.setUTCMonth(today.getUTCMonth() - 1);
 
     if (status === 'running') {
         return { end_time: { $gt: now } }; //not finished yet

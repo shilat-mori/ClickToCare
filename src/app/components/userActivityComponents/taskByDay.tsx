@@ -14,6 +14,9 @@ const TasksByDay: React.FC<TasksByDayProps> = ({ range }) => {
     const today = new Date();
     const startDate = new Date();
 
+    // Set today to midnight UTC
+    today.setUTCHours(0, 0, 0, 0);
+
     // Group Tasks by Day
     const tasksByDay: Record<string, ITask[]> = {};
 
@@ -35,19 +38,20 @@ const TasksByDay: React.FC<TasksByDayProps> = ({ range }) => {
     }, []);
 
     if (range === 'week') {
-        startDate.setDate(today.getDate() - 7);
+        startDate.setUTCDate(today.getUTCDate() - 7);
     } else {
-        startDate.setMonth(today.getMonth() - 1);
+        startDate.setUTCMonth(today.getUTCMonth() - 1);
     }
-    startDate.setHours(0, 0, 0, 0);
+    startDate.setUTCHours(0, 0, 0, 0);
 
     tasks.forEach(task => {
         const found = task.assigned.find(assignee => assignee.name === myName);
         if (!found) return;
 
-        const assignedDate = new Date(found.assignedAt).setHours(0, 0, 0, 0);
-        if (assignedDate >= startDate.setHours(0, 0, 0, 0) && assignedDate <= today.setHours(0, 0, 0, 0)) {
-            const dateKey = new Date(found.assignedAt).toLocaleDateString();
+        const assignedDate = new Date(found.assignedAt);
+        assignedDate.setUTCHours(0, 0, 0, 0);
+        if (assignedDate >= startDate && assignedDate <= today) {
+            const dateKey = assignedDate.toLocaleDateString();
             if (!tasksByDay[dateKey]) {
                 tasksByDay[dateKey] = [];
             }

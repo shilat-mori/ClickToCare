@@ -11,7 +11,8 @@ const NewTask = () => {
     const [category, setCategory] = useState('');
     const [points, setPoints] = useState<number>(0);
     const [assigned_max, setAssigned_max] = useState<number>(0);
-    const [startTime] = useState<Date>(new Date());
+    const [startTime] = useState<Date>(new Date(Date.now())); // UTC equivalent
+    // const [startTime] = useState<Date>(new Date(Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth(), new Date().getUTCDate(), 0, 0, 0)));
     const [endTime, setEndTime] = useState<Date | null>(null);
     const [endByDate, setEndByDate] = useState<boolean>(true);
     const [duration, setDuration] = useState<string>("00:00:00");
@@ -42,6 +43,7 @@ const NewTask = () => {
         return regex.test(input);
     };
 
+    //auto add : after two digits (dd:hh:mm)
     const handleDurationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let newDuration = e.target.value.replace(/[^0-9]/g, ''); //leave only the numbers
         const length = newDuration.length;

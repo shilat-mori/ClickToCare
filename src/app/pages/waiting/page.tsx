@@ -2,10 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { getUserSignUp } from '@/app/services/getUserSignUp';
 import INewUser from '@/app/types/newUser';
-import Countdown, { CountdownRenderProps } from 'react-countdown';
-import CountdownBlock from '@/app/components/waitingComponents/countdownBlock';
 import { useRouter } from 'next/navigation';
-import CountdownWaiting from '@/app/components/CountdownWaiting';
+import CountdownWaiting from '@/app/components/waitingComponents/CountdownWaiting';
 
 const Waiting = () => {
   const [signUpUser, setSignUpUser] = useState<INewUser | null>(null);
