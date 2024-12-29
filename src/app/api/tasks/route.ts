@@ -20,8 +20,8 @@ export async function POST(req: NextRequest) {
             points,
             assigned: [],
             assigned_max,
-            creation_time: new Date(creation_time),
-            end_time: new Date(end_time),
+            creation_time: new Date(creation_time).toISOString(), //save as ISO format in UTC
+            end_time: new Date(end_time).toISOString(),
         });
         await newTask.save();
         return NextResponse.json({ message: "Task created successfully", task: newTask });
@@ -47,12 +47,15 @@ export async function GET(req: NextRequest) {
             filter.category = category;
 
         // give all user-tasks if user is given
-        if (username)
+        if (username){
             filter["assigned.name"] = username;
-
+        } else {
+            filter.$expr = { $lt: [{ $size: "$assigned" }, "$assigned_max"] };
+        }
 
         // Add status filter using the utility function
         Object.assign(filter, getStatusFilter(status));
+        console.log("filter: ", filter);
 
         // Define sorting criteria
         const sortCriteria: { [key: string]: 'asc' | 'desc' } = {};

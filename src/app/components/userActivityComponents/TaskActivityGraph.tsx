@@ -29,7 +29,10 @@ const TaskActivityGraph = ({ view = 'week' }: { view: 'week' | 'month' }) => {
 
     // Utility to get the date (year, month, day) without the time 'yyyy-mm-dd'
     const getDateKey = (date: Date) => {
-        return date.toISOString().split('T')[0];
+        const year = date.getUTCFullYear();
+        const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+        const day = String(date.getUTCDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
     };
 
     // Get array of all dates in the week/month range
@@ -39,17 +42,17 @@ const TaskActivityGraph = ({ view = 'week' }: { view: 'week' | 'month' }) => {
         const allDates: string[] = [];
 
         if (view === 'week') {
-            startDate.setDate(today.getDate() - 7);
+            startDate.setUTCDate(today.getUTCDate() - 7);
         }
         if (view === 'month') {
-            startDate.setMonth(today.getMonth() - 1);
+            startDate.setUTCMonth(today.getUTCMonth() - 1);
         }
 
         // Loop through the range and get all dates
         let currentDate = new Date(startDate);
         while (currentDate <= today) {
             allDates.push(getDateKey(currentDate));
-            currentDate.setDate(currentDate.getDate() + 1); // Increment by 1 day
+            currentDate.setUTCDate(currentDate.getUTCDate() + 1); // Increment by 1 day
         }
 
         return allDates;

@@ -67,7 +67,7 @@ export async function POST(req: NextRequest) {
       password: hashedPassword,
       faceImage: base64Image,
       freeText: fields.freeText,
-      signTime: new Date(),
+      signTime: new Date().toISOString(), //save as ISO format in UTC
     });
     console.log(newUser);
 

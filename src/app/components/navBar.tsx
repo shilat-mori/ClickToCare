@@ -21,28 +21,28 @@ const NavBar: React.FC<NavbarProps> = ({ handleNavigator }) => {
     fetchRole();
   }, []);
 
-    if (!role) return <div className="navbar_blocks">Loading...</div>;
+  if (!role) return <div className="navbar_blocks">Loading...</div>;
 
-    return (
-      <div className="navbar_blocks">
-        <ScoreButton
-          text={"Score Board"}
-          navigation={"/pages/scores"}
-          handleNavigator={handleNavigator}
-        />
-        {role === UserRole.unauthorized ? (
-          <NavButton text={"⌚"} navigation={"/pages/waiting"} handleNavigator={handleNavigator}/>
-        ) : (
-          <NavButton text={"All Tasks"} navigation={"/pages/protected/publicTasks"} handleNavigator={handleNavigator}/>
-        )}
+  return (
+    <div className="navbar_blocks">
+      {role === UserRole.unauthorized ? (
+        <NavButton text={"⌚"} navigation={"/pages/waiting"} handleNavigator={handleNavigator} />
+      ) : (
+        <NavButton text={"All Tasks"} navigation={"/pages/protected/publicTasks"} handleNavigator={handleNavigator} />
+      )}
 
-        {(role === UserRole.admin)&&<NavButton text={'Verify Users'} navigation={'/pages/protected/admin/reviewNewUsers'} handleNavigator={handleNavigator}/>}
-        {(role === UserRole.admin)&&<NavButton text={'Add a Task'} navigation={'/pages/protected/admin/newTask'} handleNavigator={handleNavigator}/>}
-        {(role === UserRole.authorized)&&<NavButton text={'My Tasks'} navigation={'/pages/protected/user/myTasks'} handleNavigator={handleNavigator}/>}
-        {(role === UserRole.authorized)&&<NavButton text={'My Activity'} navigation={'/pages/protected/user/myActivity'} handleNavigator={handleNavigator}/>}
+      {(role === UserRole.admin) && <NavButton text={'Verify Users'} navigation={'/pages/protected/admin/reviewNewUsers'} handleNavigator={handleNavigator} />}
+      {(role === UserRole.admin) && <NavButton text={'Add a Task'} navigation={'/pages/protected/admin/newTask'} handleNavigator={handleNavigator} />}
+      {(role === UserRole.authorized) && <NavButton text={'My Tasks'} navigation={'/pages/protected/user/myTasks'} handleNavigator={handleNavigator} />}
+      {(role === UserRole.authorized) && <NavButton text={'My Activity'} navigation={'/pages/protected/user/myActivity'} handleNavigator={handleNavigator} />}
 
-</div>
-    );
+      <ScoreButton
+        text={"Score Board"}
+        navigation={"/pages/scores"}
+        handleNavigator={handleNavigator}
+      />
+    </div>
+  );
 };
 
 export default NavBar;

@@ -31,6 +31,14 @@ const PublicTasks = () => {
     };
 
     fetchTasks();
+
+    // // Set up periodic polling
+    // const interval = setInterval(() => {
+    //   fetchTasks();
+
+    // }, 5000); // Re-fetch every 5 seconds
+
+    // return () => clearInterval(interval); // Clean up on unmount
   }, [category, sortBy, order]);
 
   useEffect(() => {
@@ -76,13 +84,26 @@ const PublicTasks = () => {
     </div>
   );
 
+  const getMaxAssignee = (taskId: string): number | undefined => {
+    const task = tasks.find(task => task._id === taskId);
+    return task?.assigned_max; // Return the max assignee or undefined if not found
+  };
+
   // Update the task assigned list in state when changes are made
   const setAssigned = (taskId: string, updatedAssigned: Assignee[]) => {
-    setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task._id === taskId ? { ...task, assigned: updatedAssigned } : task
-      )
-    );
+    //first check if we got to the max assignees
+    const maxAssignee = getMaxAssignee(taskId);
+    //if so, don't show this task
+    if (maxAssignee !== undefined && updatedAssigned.length >= maxAssignee) {
+      removeTask(taskId);
+    } else {
+      //otherwise, upadte the assignee list in the card component
+      setTasks((prevTasks) =>
+        prevTasks.map((task) =>
+          task._id === taskId ? { ...task, assigned: updatedAssigned } : task
+        )
+      );
+    }
   };
 
   const removeTask = (taskId: string) => {
