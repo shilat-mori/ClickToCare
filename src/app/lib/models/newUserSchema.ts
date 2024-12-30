@@ -1,5 +1,5 @@
 import mongoose, { Model, Schema } from 'mongoose';
-import INewUser from '@/app/types/newUser'; //the interfave for new user
+import INewUser from '@/app/types/users/newUsers/newUser';
 
 const NewUserSchema: Schema<INewUser> = new Schema({
     username: { type: String, required: true, unique: true },
