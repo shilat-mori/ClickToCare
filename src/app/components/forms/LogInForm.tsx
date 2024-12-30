@@ -5,8 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
-import { getUserRoleFromCookies } from "../services/frontUtils";
-import { UserRole } from "../types/users/userRole";
+import { getUserRoleFromCookies } from "@/app/services/frontUtils";
+import { UserRole } from "@/app/types/users/userRole";
 import { NextResponse } from "next/server";
 
 //learn code
