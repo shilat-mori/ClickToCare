@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import { getUserSignUp } from '@/app/services/getUserSignUp';
-import INewUser from '@/app/types/newUser';
+import INewUser from '@/app/types/users/newUsers/newUser';
 import { useRouter } from 'next/navigation';
 import CountdownWaiting from '@/app/components/waitingComponents/CountdownWaiting';
 
