@@ -14,8 +14,6 @@ const Waiting = () => {
       if (!user || user.error)
        router.push('/')
       else setSignUpUser(user); // Save user data in state 
-      console.log("username: ", user?.username); // Log username if available
-      console.log("time: ", user?.signTime, " of type: ", typeof (user?.signTime));
     };
 
     fetchData();

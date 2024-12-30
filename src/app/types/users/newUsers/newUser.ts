@@ -6,4 +6,5 @@ export default interface INewUser {
   faceImage: ArrayBuffer | null;
   freeText: string;
   signTime: Date;
+  reject_time: Date | null;
 }
