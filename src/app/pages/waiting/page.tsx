@@ -20,13 +20,6 @@ const Waiting = () => {
     fetchData();
   }, []);
 
-
-  const signUpDate = signUpUser?.signTime ? new Date(signUpUser.signTime) : null;
-  const rejectDate = signUpUser?.reject_time ? new Date(signUpUser.reject_time) : null;
-
-  const baseDate = rejectDate || signUpDate; //prefer the reject date if exists.
-  const endDate = baseDate ? new Date(baseDate.getTime() + 7 * 24 * 60 * 60 * 1000) : null;
-
   const handleCountdownComplete = async () => {
     //if user exists, but wasn't rejected yet
     if (signUpUser && !signUpUser.reject_time) {
@@ -39,6 +32,26 @@ const Waiting = () => {
     //if we completed the rejected countdown, there's nothing to do
     //it will be erased automatically around midnight UTC
   };
+
+  const signUpDate = signUpUser?.signTime ? new Date(signUpUser.signTime) : null;
+  const rejectDate = signUpUser?.reject_time ? new Date(signUpUser.reject_time) : null;
+
+  // For rejectDate, set the end date to 7 days later at midnight UTC. (when vercel erases it)
+  const rejectEndDate = rejectDate
+    ? (() => {
+      const end = new Date(rejectDate);
+      end.setUTCDate(end.getUTCDate() + 7); // Add 7 days
+      end.setUTCHours(0, 0, 0, 0); // Set to midnight UTC
+      return end;
+    })()
+    : null;
+
+  // For signUpDate, set the end date to exactly 7 days later.
+  const signUpEndDate = signUpDate
+    ? new Date(signUpDate.getTime() + 7 * 24 * 60 * 60 * 1000) // Add 7 days in milliseconds
+    : null;
+
+  const endDate = rejectEndDate || signUpEndDate; //prefer the reject date if exists.
 
   return (
     <div>
