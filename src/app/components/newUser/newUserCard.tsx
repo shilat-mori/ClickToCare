@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { verifyUser, rejectUser } from "../services/verifyUser";
-import NewUserCardProps from "../types/newUserCardProps";
+import { verifyUser, rejectUser } from "../../services/verifyUser";
+import NewUserCardProps from "../../types/users/newUsers/newUserCardProps";
 import Avatar from "./Avatar";
 import Compressor from "compressorjs";
 

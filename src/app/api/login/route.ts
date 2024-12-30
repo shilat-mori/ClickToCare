@@ -4,7 +4,7 @@ import User from "@/app/lib/models/userSchema";
 import { generateToken } from "../../lib/tokenUtil";
 import bcrypt from 'bcryptjs';
 import NewUser from "@/app/lib/models/newUserSchema";
-import { UserRole } from "@/app/types/userRole";
+import { UserRole } from "@/app/types/users/userRole";
 
 //check the user with DB - logIn
 export async function POST(req: NextRequest) {

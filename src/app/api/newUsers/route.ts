@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import User from "@/app/lib/models/userSchema";
 import NewUser from "@/app/lib/models/newUserSchema";
-import { UserRole } from "@/app/types/userRole";
+import { UserRole } from "@/app/types/users/userRole";
 import { generateToken } from "@/app/lib/tokenUtil";
 import { SortOrder } from "mongoose";
 import { string } from "zod";

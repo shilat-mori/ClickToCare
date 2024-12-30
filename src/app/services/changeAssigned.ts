@@ -1,7 +1,7 @@
 "use client"
 import axios from 'axios';
 import { getUsernameFromCookies } from "./frontUtils";
-import { Assignee } from '../types/assignee';
+import { Assignee } from '../types/tasks/assignee/assignee';
 
 //check if assigned to me
 export const assignedToMe = async (taskId: string) => {

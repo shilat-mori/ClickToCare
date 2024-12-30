@@ -1,13 +1,13 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import { getUserRoleFromCookies } from '../services/frontUtils';
-import { UserRole } from '../types/userRole';
-import TimeRemainingCard from './TimeRemainingCard';
-import { removeMe, addMe, assignedToMe } from '../services/changeAssigned';
+import { getUserRoleFromCookies } from '../../services/frontUtils';
+import { UserRole } from '@/app/types/users/userRole';
+import TimeRemainingCard from '../timeRemaining/TimeRemainingCard';
+import { removeMe, addMe, assignedToMe } from '../../services/changeAssigned';
 import AssigneeList from './assigneeList';
-import { deleteTask } from '../services/adminTaskDelete';
+import { deleteTask } from '../../services/adminTaskDelete';
 import Image from 'next/image';
-import CardProps from '../types/cardProps';
+import CardProps from '@/app/types/tasks/cardProps';
 
 //function to determine card color based on category
 const categoryColor = (category: string) => {

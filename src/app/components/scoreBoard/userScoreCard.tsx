@@ -1,7 +1,7 @@
 "use client"
 import React from "react"
 import Image from "next/image"
-import { UserScoreCardProps } from "../types/userScoreCardProps"
+import { UserScoreCardProps } from "../../types/users/userScoreCardProps"
 
 const UserScoreCard: React.FC<UserScoreCardProps> = ({ username, score, isMax }) => {
     return (

@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react'
-import ITask from '@/app/types/tasks';
+import ITask from '@/app/types/tasks/tasks';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 

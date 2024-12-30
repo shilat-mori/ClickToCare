@@ -1,7 +1,7 @@
 "use client"
 import axios from 'axios';
 import { getUsernameFromCookies } from './frontUtils';
-import INewUser from '../types/newUser';
+import INewUser from '../types/users/newUsers/newUser';
 
 export const getUserSignUp = async () => {
     try {

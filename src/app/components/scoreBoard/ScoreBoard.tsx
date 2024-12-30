@@ -1,7 +1,7 @@
 "use client"
-import UserScoreCard from '@/app/components/userScoreCard';
-import { UserRole } from '@/app/types/userRole';
-import IUser from '@/app/types/users';
+import UserScoreCard from '@/app/components/scoreBoard/userScoreCard';
+import { UserRole } from '@/app/types/users/userRole';
+import IUser from '@/app/types/users/users';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
  

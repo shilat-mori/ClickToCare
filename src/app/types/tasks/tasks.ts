@@ -1,4 +1,4 @@
-import { Assignee } from "./assignee";
+import { Assignee } from "./assignee/assignee";
 
 export default interface ITask {
     _id: string;

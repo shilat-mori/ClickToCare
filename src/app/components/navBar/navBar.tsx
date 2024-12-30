@@ -1,12 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { UserRole } from "../types/userRole";
-import { getUserRoleFromCookies } from "../services/frontUtils";
+import { UserRole } from "../../types/users/userRole";
+import { getUserRoleFromCookies } from "../../services/frontUtils";
 import { useRouter } from "next/navigation";
 import Trophy from "./trophy";
-import NavbarProps from "../types/navbarProps";
+import NavbarProps from "../../types/navBar/navbarProps";
 import NavButton from "./NavButton";
-import ScoreButton from "./ScoreButton";
+import ScoreButton from "../scoreBoard/ScoreButton";
 
 const NavBar: React.FC<NavbarProps> = ({ handleNavigator }) => {
   const router = useRouter();

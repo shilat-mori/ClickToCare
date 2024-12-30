@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { removeToken } from "../services/frontUtils";
 import { useRouter } from 'next/navigation';
-import NavBar from "../components/navBar";
+import NavBar from "../components/navBar/navBar";
 import { useHeaderHeight } from "../context/HeaderHeightContext";
 
 export default function Layout({ children }: { children: React.ReactNode }) {

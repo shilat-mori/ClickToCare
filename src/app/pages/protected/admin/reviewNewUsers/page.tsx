@@ -1,8 +1,8 @@
 "use client"
-import NewUserCard from '@/app/components/newUserCard';
+import NewUserCard from '@/app/components/newUser/newUserCard';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
-import INewUser from '@/app/types/newUser';
+import INewUser from '@/app/types/users/newUsers/newUser';
 
 const ReviewNewUsers = () => {
   const [users, setUsers] = useState<INewUser[]>([]);

@@ -1,4 +1,4 @@
-import { Assignee } from "./assignee";
+import { Assignee } from "./tasks/assignee";
 
 export default interface AssigneeListProps {
     assigned: Assignee[];

@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { Assignee } from "@/app/types/assignee";
+import { Assignee } from "@/app/types/tasks/assignee/assignee";
 
 const AssigneeSchema: Schema<Assignee> = new Schema({
     name: { type: String, required: true },

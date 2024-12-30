@@ -1,5 +1,5 @@
-import ITask from '../types/tasks'
-import { Assignee } from './assignee';
+import ITask from './tasks'
+import { Assignee } from './assignee/assignee';
 
 export default interface CardProps {
     taskInfo: ITask;

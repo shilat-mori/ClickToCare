@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { getMyTasks } from '@/app/services/getMyTasks';
-import ITask from '@/app/types/tasks';
+import ITask from '@/app/types/tasks/tasks';
 import { getUsernameFromCookies } from '@/app/services/frontUtils';
 
 const TaskActivityGraph = ({ view = 'week' }: { view: 'week' | 'month' }) => {

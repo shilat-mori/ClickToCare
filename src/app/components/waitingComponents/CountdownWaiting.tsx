@@ -1,7 +1,7 @@
 import React from "react";
 import Countdown, { CountdownRenderProps } from "react-countdown";
 import CountdownBlock from "@/app/components/waitingComponents/countdownBlock";
-import countdownWaitingProps from "@/app/types/countdownWaitingProps";
+import countdownWaitingProps from "@/app/types/waiting/countdownWaitingProps";
 const CountdownWaiting: React.FC<countdownWaitingProps> = ({ endDate }) => {
   const renderer = ({
     days,

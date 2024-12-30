@@ -1,9 +1,9 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import ITask from '@/app/types/tasks';
+import ITask from '@/app/types/tasks/tasks';
 import { getMyTasks } from '@/app/services/getMyTasks';
-import TaskCard from '@/app/components/taskCard';
-import { Assignee } from '@/app/types/assignee';
+import TaskCard from '@/app/components/tasks/taskCard';
+import { Assignee } from '@/app/types/tasks/assignee/assignee';
 
 const MyTasks = () => {
   const [tasks, setTasks] = useState<ITask[]>([]);

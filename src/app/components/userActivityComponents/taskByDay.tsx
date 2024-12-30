@@ -1,8 +1,8 @@
 "use client"
 import { getMyTasks } from '@/app/services/getMyTasks';
-import ITask from '@/app/types/tasks';
+import ITask from '@/app/types/tasks/tasks';
 import React, { useEffect, useState } from 'react'
-import { TasksByDayProps } from '@/app/types/taskByDayProps';
+import { TasksByDayProps } from '@/app/types/tasks/taskByDayProps';
 import { getUsernameFromCookies } from '@/app/services/frontUtils';
 
 const TasksByDay: React.FC<TasksByDayProps> = ({ range }) => {

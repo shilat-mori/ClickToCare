@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyToken } from "./app/lib/tokenUtil";
-import { UserRole } from "./app/types/userRole";
+import { UserRole } from "./app/types/users/userRole";
 
 export function middleware(req: NextRequest) {
   console.log("Middleware is running for:", req.nextUrl.pathname);

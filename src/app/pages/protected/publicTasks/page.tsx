@@ -1,10 +1,10 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { useHeaderHeight } from '@/app/context/HeaderHeightContext';
-import TaskCard from '@/app/components/taskCard';
-import ITask from '@/app/types/tasks';
+import TaskCard from '@/app/components/tasks/taskCard';
+import ITask from '@/app/types/tasks/tasks';
 import axios from 'axios';
-import { Assignee } from '@/app/types/assignee';
+import { Assignee } from '@/app/types/tasks/assignee/assignee';
 import Masonry from 'react-masonry-css';
 
 const PublicTasks = () => {

@@ -1,6 +1,6 @@
 import { useRouter } from 'next/navigation';
 import React from 'react'
-import navButtonProps from '../types/navButtonProps';
+import navButtonProps from '../../types/navBar/navButtonProps';
 
 const NavButton:React.FC<navButtonProps> = ({text, navigation, handleNavigator}) => {
     const router = useRouter()

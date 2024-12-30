@@ -1,8 +1,8 @@
 import React from "react";
-import Trophy from "./trophy";
+import Trophy from "../navBar/trophy";
 import { useRouter } from "next/navigation";
-import NavbarProps from "../types/navbarProps";
-import navButtonProps from "../types/navButtonProps";
+import NavbarProps from "../../types/navBar/navbarProps";
+import navButtonProps from "../../types/navBar/navButtonProps";
 
 const ScoreButton: React.FC<navButtonProps> = ({
   text,

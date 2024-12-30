@@ -6,7 +6,7 @@ import { useState } from "react";
 import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { getUserRoleFromCookies } from "../services/frontUtils";
-import { UserRole } from "../types/userRole";
+import { UserRole } from "../types/users/userRole";
 import { NextResponse } from "next/server";
 
 //learn code

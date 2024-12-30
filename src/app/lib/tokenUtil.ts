@@ -1,5 +1,5 @@
 import { SignJWT, jwtVerify, type JWTPayload } from 'jose';
-import { UserRole } from '@/app/types/userRole';
+import { UserRole } from '@/app/types/users/userRole';
 import { NextRequest } from 'next/server';
 import DecodedToken from '../types/decodedToken';
 

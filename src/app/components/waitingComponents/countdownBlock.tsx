@@ -1,4 +1,4 @@
-import CountdownBlockProps from '@/app/types/countdownBlockProps'
+import CountdownBlockProps from '@/app/types/waiting/countdownBlockProps'
 import React from 'react'
 
 const CountdownBlock: React.FC<CountdownBlockProps> = ({ name, num }) => {

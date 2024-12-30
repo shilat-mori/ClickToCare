@@ -1,5 +1,6 @@
 import React from 'react';
-import AssigneeListProps from '../types/assigneeListProps';
+import AssigneeListProps from '@/app/types/tasks/assignee/assigneeListProps';
+import { Assignee } from '@/app/types/tasks/assignee/assignee';
 
 const AssigneeList: React.FC<AssigneeListProps> = ({ assigned, maxAssignees }) => {
     const emptySlots = maxAssignees - assigned.length;
@@ -9,7 +10,7 @@ const AssigneeList: React.FC<AssigneeListProps> = ({ assigned, maxAssignees }) =
             <p>Available: {emptySlots}/{maxAssignees}</p>
             <table className="bordered table-auto w-full">
                 <tbody>
-                    {assigned.map((assignee, index) => (
+                    {assigned.map((assignee: Assignee, index: number) => (
                         <tr key={index} className="bordered">
                             <td className="p-2">{assignee.name}</td>
                         </tr>

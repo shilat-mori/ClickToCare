@@ -1,5 +1,5 @@
 "use client"
-import { UserRole } from "../types/userRole";
+import { UserRole } from "../types/users/userRole";
 
 function decodeJWT(token: string): any | null {
     const parts = token.split('.');

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import connect from "@/app/lib/db/mongodb";
 import User from "@/app/lib/models/userSchema";
 import { generateToken } from "../../lib/tokenUtil";
-import { UserRole } from "@/app/types/userRole";
+import { UserRole } from "@/app/types/users/userRole";
 import bcrypt from 'bcryptjs';
 import { SortOrder } from "mongoose";
 
