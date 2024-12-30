@@ -4,6 +4,7 @@ import { getUserSignUp } from '@/app/services/getUserSignUp';
 import INewUser from '@/app/types/users/newUsers/newUser';
 import { useRouter } from 'next/navigation';
 import CountdownWaiting from '@/app/components/waitingComponents/CountdownWaiting';
+import { rejectUser } from '@/app/services/verifyUser';
 
 const Waiting = () => {
   const [signUpUser, setSignUpUser] = useState<INewUser | null>(null);
@@ -12,7 +13,7 @@ const Waiting = () => {
     const fetchData = async () => {
       const user = await getUserSignUp();
       if (!user || user.error)
-       router.push('/')
+        router.push('/')
       else setSignUpUser(user); // Save user data in state 
     };
 
@@ -21,18 +22,35 @@ const Waiting = () => {
 
 
   const signUpDate = signUpUser?.signTime ? new Date(signUpUser.signTime) : null;
-  const endDate = signUpDate
-    ? new Date(signUpDate.getTime() + 7 * 24 * 60 * 60 * 1000) // Add 1 week (in milliseconds)
-    : null;
+  const rejectDate = signUpUser?.reject_time ? new Date(signUpUser.reject_time) : null;
 
+  const baseDate = rejectDate || signUpDate; //prefer the reject date if exists.
+  const endDate = baseDate ? new Date(baseDate.getTime() + 7 * 24 * 60 * 60 * 1000) : null;
+
+  const handleCountdownComplete = async () => {
+    //if user exists, but wasn't rejected yet
+    if (signUpUser && !signUpUser.reject_time) {
+      //user waiting period has ended, we want to automatically reject him (and start reject countdown)
+      rejectUser(signUpUser._id);
+      // refresh data and page
+      const user = await getUserSignUp();
+      setSignUpUser(user);
+    }
+    //if we completed the rejected countdown, there's nothing to do
+    //it will be erased automatically around midnight UTC
+  };
 
   return (
     <div>
       {signUpUser ? (
         <div>
           <p>Welcome, {signUpUser.username}!</p>
-          <p>Answer in:</p>
-         <CountdownWaiting endDate={endDate}/>
+          <p>
+            {signUpUser.reject_time
+              ? "You were rejected, and will be deleted in:"
+              : "Answer in:"}
+          </p>
+          <CountdownWaiting endDate={endDate} onComplete={handleCountdownComplete} />
         </div>
       ) : (
         <p>Loading user data...</p>
