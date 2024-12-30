@@ -68,6 +68,7 @@ export async function POST(req: NextRequest) {
       faceImage: base64Image,
       freeText: fields.freeText,
       signTime: new Date().toISOString(), //save as ISO format in UTC
+      reject_time: null,
     });
     console.log(newUser);
 
@@ -100,23 +101,23 @@ export async function POST(req: NextRequest) {
 
 //get all - for admin/ see all new users
 export async function GET(req: NextRequest) {
-  console.log("api/newUsers - get");
   try {
     await connect();
+
     // Extract query params
     const username = req.nextUrl.searchParams.get("username");
-    console.log("api/newUsers - get - username: ", username);
+
     //if search for a specific user
     if (username) {
       const user = await NewUser.find({ username });
-      console.log("api/newUsers - get - user: ", user);
       return NextResponse.json(user || { error: "User not found" });
     }
 
-    //otherwise, return all
+    //otherwise, return all that are not rejected
+    const filter: { [key: string]: any } = { reject_time: null };
     const sortCriteria: { signTime: SortOrder } = { signTime: "asc" }; //show oldest req first
 
-    const users = await NewUser.find().sort(sortCriteria);
+    const users = await NewUser.find(filter).sort(sortCriteria);
     return NextResponse.json(users);
   } catch (error) {
     return NextResponse.json({ error: "Error in fetching new users " + error });

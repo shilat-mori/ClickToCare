@@ -9,6 +9,7 @@ const ReviewNewUsers = () => {
 
   const fetchUsers = async () => {
     try {
+      // only the new users that are not rejected
       const response = await axios.get<INewUser[]>('/api/newUsers');
       setUsers(response.data);
     } catch (error) {
@@ -20,6 +21,7 @@ const ReviewNewUsers = () => {
     fetchUsers();
   }, []);
 
+  //local filtering. used for user verify and for user reject
   const userVerified = (userId: string) => {
     setUsers(prev => prev.filter(user => user._id !== userId));
   };

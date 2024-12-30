@@ -2,7 +2,8 @@ import React from "react";
 import Countdown, { CountdownRenderProps } from "react-countdown";
 import CountdownBlock from "@/app/components/waitingComponents/countdownBlock";
 import countdownWaitingProps from "@/app/types/waiting/countdownWaitingProps";
-const CountdownWaiting: React.FC<countdownWaitingProps> = ({ endDate }) => {
+
+const CountdownWaiting: React.FC<countdownWaitingProps> = ({ endDate, onComplete }) => {
   const renderer = ({
     days,
     hours,
@@ -25,7 +26,15 @@ const CountdownWaiting: React.FC<countdownWaitingProps> = ({ endDate }) => {
       );
     }
   };
-  return endDate?<Countdown date={endDate} renderer={renderer} />:<div/>;
+  return endDate ? (
+    <Countdown
+      date={endDate}
+      renderer={renderer}
+      onComplete={onComplete} // Pass the custom function here
+    />
+  ) : (
+    <div />
+  );
 };
 
 export default CountdownWaiting;

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { getUserRoleFromCookies } from '../../services/frontUtils';
 import { UserRole } from '@/app/types/users/userRole';
-import TimeRemainingCard from '../timeRemaining/TimeRemainingCard';
+import TimeRemainingCard from './timeRemaining/TimeRemainingCard';
 import { removeMe, addMe, assignedToMe } from '../../services/changeAssigned';
 import AssigneeList from './assigneeList';
 import { deleteTask } from '../../services/adminTaskDelete';
