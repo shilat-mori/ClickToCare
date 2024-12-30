@@ -1,4 +1,5 @@
 import { deleteOldTasks } from '@/app/services/auto_delete/oldTasks';
+import { deleteOldRejects } from '@/app/services/auto_delete/rejectedUsers';
 import { NextResponse } from 'next/server';
 
 export async function GET(req: Request) {
@@ -10,16 +11,18 @@ export async function GET(req: Request) {
 
     try {
         // Call the function to delete old tasks
-        const result = await deleteOldTasks();
+        const tasks = await deleteOldTasks();
+        const users = await deleteOldRejects();
 
         return NextResponse.json({
             ok: true,
-            deletedTasks: result,
+            deletedTasks: tasks,
+            deletedUsers: users,
         });
     } catch (error) {
-        console.error('Error deleting old tasks:', error);
+        console.error('Error deleting old tasks or users:', error);
         return NextResponse.json(
-            { error: 'Failed to delete old tasks' },
+            { error: 'Failed to delete old tasks or users' },
             { status: 500 }
         );
     }
