@@ -31,14 +31,6 @@ const PublicTasks = () => {
     };
 
     fetchTasks();
-
-    // // Set up periodic polling
-    // const interval = setInterval(() => {
-    //   fetchTasks();
-
-    // }, 5000); // Re-fetch every 5 seconds
-
-    // return () => clearInterval(interval); // Clean up on unmount
   }, [category, sortBy, order]);
 
   useEffect(() => {

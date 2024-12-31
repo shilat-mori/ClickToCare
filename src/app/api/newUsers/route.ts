@@ -1,12 +1,11 @@
 import connect from "@/app/lib/db/mongodb";
+import cloudinary from "@/app/services/cloudinary";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import User from "@/app/lib/models/userSchema";
 import NewUser from "@/app/lib/models/newUserSchema";
 import { UserRole } from "@/app/types/users/userRole";
 import { generateToken } from "@/app/lib/tokenUtil";
-import { SortOrder } from "mongoose";
-import { string } from "zod";
 
 //post new req - from sign up
 export async function POST(req: NextRequest) {
@@ -15,66 +14,70 @@ export async function POST(req: NextRequest) {
     await connect();
 
     // get the data from the request body
-    const formData = await req.formData(); // Use formData directly
-    const file = formData.get("faceImage") as File; // Adjust the field name as necessary
+    const formData = await req.formData();
+    const file = formData.get("faceImage") as File;
 
     if (!file) {
       return NextResponse.json(
         { error: "No face image found in the request." },
-        { status: 501 }
+        { status: 400 }
       );
     }
 
     // Process the file or other fields
     const fields = Object.fromEntries(formData.entries());
 
-    console.log("Fields:", fields);
-    console.log("Files:", file);
-
-    // Convert file to Base64
-    const arrayBuffer = await file.arrayBuffer();
-    const base64Image = Buffer.from(arrayBuffer).toString("base64");
-
-    // Check if the email already exists
-    // on regular users
-    const existingUser = await User.findOne({
+    // Check if email or username already exists in User or NewUser collections
+    const emailOrUsernameExists = await User.findOne({
+      $or: [{ email: fields.email }, { username: fields.username }],
+    }) || await NewUser.findOne({
       $or: [{ email: fields.email }, { username: fields.username }],
     });
 
-    if (existingUser) {
+    if (emailOrUsernameExists) {
       return NextResponse.json(
-        { error: "Email or username already exists" },
+        { error: "Email or username already exists." },
         { status: 409 }
       );
     }
-    //on new users
-    const existingNewUser = await NewUser.findOne({
-      $or: [{ email: fields.email }, { username: fields.username }],
-    });
-    if (existingNewUser) {
-      return NextResponse.json(
-        { error: "Email or username already exists, wait to be approved" },
-        { status: 409 }
-      );
-    }
-    console.log(fields.password);
 
     const hashedPassword = await bcrypt.hash(String(fields.password), 10);
+
+    // Convert the File to a Base64 Data URI
+    const arrayBuffer = await file.arrayBuffer();
+    const base64Image = Buffer.from(arrayBuffer).toString("base64");
+    const dataUri = `data:${file.type};base64,${base64Image}`;
+
+    // Upload to Cloudinary
+    const uploadResult = await cloudinary.uploader.upload(dataUri, {
+      folder: "users/faceImages",
+      public_id: String(fields.username),
+      overwrite: true,
+    });
+
+    if (!uploadResult || !uploadResult.secure_url) {
+      return NextResponse.json(
+        { error: "Failed to upload face image to Cloudinary." },
+        { status: 500 }
+      );
+    }
+
     //create the new user and save to database
     const newUser = new NewUser({
       username: fields.username,
       email: fields.email,
       password: hashedPassword,
-      faceImage: base64Image,
+      faceImage: uploadResult.secure_url,
       freeText: fields.freeText,
       signTime: new Date().toISOString(), //save as ISO format in UTC
       reject_time: null,
     });
-    console.log(newUser);
 
     await newUser.save();
+
     //generate a token - unauthorized, since we just signed up
     const token = await generateToken(newUser.username, UserRole.unauthorized);
+
     // Set the token in a cookie
     const response = NextResponse.json({
       message: "New user created successfully",
@@ -90,8 +93,6 @@ export async function POST(req: NextRequest) {
 
     return response;
   } catch (error) {
-    console.log();
-
     return NextResponse.json(
       { error: "Error in creating new user" },
       { status: 500 }
@@ -114,10 +115,8 @@ export async function GET(req: NextRequest) {
     }
 
     //otherwise, return all that are not rejected
-    const filter: { [key: string]: any } = { reject_time: null };
-    const sortCriteria: { signTime: SortOrder } = { signTime: "asc" }; //show oldest req first
+    const users = await NewUser.find({ reject_time: null }).sort({ signTime: "asc" });
 
-    const users = await NewUser.find(filter).sort(sortCriteria);
     return NextResponse.json(users);
   } catch (error) {
     return NextResponse.json({ error: "Error in fetching new users " + error });
