@@ -3,7 +3,7 @@ export default interface INewUser {
   username: string;
   email: string;
   password: string;
-  faceImage: ArrayBuffer | null;
+  faceImage: string; //URL from cloudinary
   freeText: string;
   signTime: Date;
 }

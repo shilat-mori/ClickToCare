@@ -5,7 +5,7 @@ const NewUserSchema: Schema<INewUser> = new Schema({
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    faceImage: { type: Buffer, default: null },
+    faceImage: { type: String, required: true },
     freeText: { type: String, default: "" },
     signTime: { type: Date, default: Date.now },
 });
