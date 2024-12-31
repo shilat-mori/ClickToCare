@@ -6,10 +6,6 @@ import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-const errorMessage = ()=>{
-  //TODO pop up message about the error.
-}
-
 const SignUpForm = () => {
   const router = useRouter();
   const schema = z
@@ -39,6 +35,7 @@ const SignUpForm = () => {
       message: "Passwords do not match",
     });
   type INewUser = z.infer<typeof schema>;
+
   const {
     register,
     handleSubmit,
@@ -46,10 +43,14 @@ const SignUpForm = () => {
   } = useForm<INewUser>({
     resolver: zodResolver(schema),
   });
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState("");
+  const [formErrors, setFormErrors] = useState<string[]>([]); // For backend errors
+
   const onSubmit = async (data: INewUser) => {
     setIsSubmitting(true);
+    setFormErrors([]); // Clear previous errors
 
     const formData = new FormData();
     formData.append("username", data.username);
@@ -68,20 +69,20 @@ const SignUpForm = () => {
         },
       });
       if (response.data.error) {
-        //TODO errorMessage call
+        setFormErrors([response.data.error]);
       } else {
-        
         console.log("signed successfully");
-        setMessage(response.data.error);
         router.push("/pages/waiting/");
       }
-      setIsSubmitting(false);
+
     } catch (error) {
       console.error("Error signing up", error);
-      //TODO errorMessage call
+      setFormErrors(["An error occurred while signing up. Please try again."]);
     }
 
-    
+    setIsSubmitting(false);
+
+
   };
   return (
     <div className="form-box justify-center">
@@ -148,6 +149,15 @@ const SignUpForm = () => {
             placeholder="Write about yourself. why have you decided to join us?"
           />
         </div>
+
+        {/* Display backend error messages */}
+        {formErrors.length > 0 && (
+          <div className="error-messages">
+            {formErrors.map((error, index) => (
+              <p key={index} className="error-text">{error}</p>
+            ))}
+          </div>
+        )}
 
         <button
           className="buttonStyle flex flex-col"
