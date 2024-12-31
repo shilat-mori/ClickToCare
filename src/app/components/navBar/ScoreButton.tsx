@@ -1,7 +1,6 @@
 import React from "react";
-import Trophy from "../navBar/trophy";
+import Trophy from "./trophy";
 import { useRouter } from "next/navigation";
-import NavbarProps from "../../types/navBar/navbarProps";
 import navButtonProps from "../../types/navBar/navButtonProps";
 
 const ScoreButton: React.FC<navButtonProps> = ({
@@ -9,7 +8,6 @@ const ScoreButton: React.FC<navButtonProps> = ({
   navigation,
   handleNavigator,
 }) => {
-  const router = useRouter();
   return (
     <button
       className={`navbar_buttons flex items-center space-x-2`}
