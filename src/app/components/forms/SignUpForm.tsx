@@ -30,7 +30,7 @@ const SignUpForm = () => {
         .refine(
           (file) =>
             ["image/jpeg", "image/png", "image/jpg"].includes(file[0]?.type),
-          "Only JPG or PNG images are allowed"
+          "Only JPG, JPEG or PNG images are allowed"
         ),
       freeText: z.string().optional(),
     })

@@ -4,8 +4,6 @@ import { verifyUser, rejectUser } from "../../services/verifyUser";
 import NewUserCardProps from "../../types/users/newUsers/newUserCardProps";
 import Avatar from "./Avatar";
 import Compressor from "compressorjs";
-
-//learn code
  
 const NewUserCard: React.FC<NewUserCardProps> = ({ userInfo, setVerified }) => {
   const [compressedImage, setCompressedImage] = useState<string | null>(null);
