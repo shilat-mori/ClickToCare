@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
     // Upload to Cloudinary
     const uploadResult = await cloudinary.uploader.upload(dataUri, {
       folder: "users/faceImages",
-      public_id: fields.username,
+      public_id: String(fields.username),
       overwrite: true,
     });
 
