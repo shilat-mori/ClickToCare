@@ -1,3 +1,4 @@
-export default interface countdownWaitingProps{
-    endDate: Date |null
+export default interface countdownWaitingProps {
+    endDate: Date | null
+    onComplete: () => void;
 }

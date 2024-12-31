@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import TimeTrackerProps from "../../types/tasks/timeRemaining/timeTrackerProps";
+import TimeTrackerProps from "../../../types/tasks/timeRemaining/timeTrackerProps";
  
 const formatTime = (seconds: number) => {
   const days = Math.floor(seconds / (60 * 60 * 24));

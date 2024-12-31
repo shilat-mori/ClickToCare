@@ -54,3 +54,23 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
     }
 }
 
+// update the newUser as rejected
+export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+    try {
+        await connect();
+        const newUser = await NewUser.findById(params.id);
+
+        if (!newUser) {
+            return NextResponse.json({ error: "User not found" }, { status: 404 });
+        }
+
+        // add now in utc as reject time
+        newUser.reject_time = new Date();
+
+        await newUser.save();
+        return NextResponse.json({ message: "User updated successfully", newUser });
+    } catch (error) {
+        return NextResponse.json({ error: "Error in updating user " + error });
+    }
+}
+

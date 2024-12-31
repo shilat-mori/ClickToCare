@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import TimeTracker from "./TimeRemainingGraph";
-import TimeCardProps from "../../types/tasks/timeRemaining/timeCardProps";
+import TimeCardProps from "../../../types/tasks/timeRemaining/timeCardProps";
 
 const TimeRemainingCard: React.FC<TimeCardProps> = ({ startTime, endTime }) => {
   // Calculate the total time in milliseconds

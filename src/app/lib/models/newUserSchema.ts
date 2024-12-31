@@ -8,6 +8,7 @@ const NewUserSchema: Schema<INewUser> = new Schema({
     faceImage: { type: String, required: true },
     freeText: { type: String, default: "" },
     signTime: { type: Date, default: Date.now },
+    reject_time: {type: Date, default: null},
 });
 
 const NewUser: Model<INewUser> = mongoose.models.NewUser || mongoose.model<INewUser>('NewUser', NewUserSchema);

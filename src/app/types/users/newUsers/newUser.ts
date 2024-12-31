@@ -6,4 +6,5 @@ export default interface INewUser {
   faceImage: string; //URL from cloudinary
   freeText: string;
   signTime: Date;
+  reject_time: Date | null;
 }

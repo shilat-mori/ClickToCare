@@ -116,6 +116,7 @@ export async function GET(req: NextRequest) {
 
     //otherwise, return all that are not rejected
     const users = await NewUser.find({ reject_time: null }).sort({ signTime: "asc" });
+
     return NextResponse.json(users);
   } catch (error) {
     return NextResponse.json({ error: "Error in fetching new users " + error });

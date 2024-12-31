@@ -3,13 +3,11 @@ import React, { useState, useEffect } from "react";
 import { UserRole } from "../../types/users/userRole";
 import { getUserRoleFromCookies } from "../../services/frontUtils";
 import { useRouter } from "next/navigation";
-import Trophy from "./trophy";
 import NavbarProps from "../../types/navBar/navbarProps";
 import NavButton from "./NavButton";
-import ScoreButton from "../scoreBoard/ScoreButton";
+import ScoreButton from "./ScoreButton";
 
 const NavBar: React.FC<NavbarProps> = ({ handleNavigator }) => {
-  const router = useRouter();
   const [role, setRole] = useState<UserRole | null>(null);
 
   useEffect(() => {
