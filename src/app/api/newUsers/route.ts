@@ -70,6 +70,7 @@ export async function POST(req: NextRequest) {
       faceImage: uploadResult.secure_url,
       freeText: fields.freeText,
       signTime: new Date().toISOString(), //save as ISO format in UTC
+      reject_time: null,
     });
 
     await newUser.save();
@@ -101,16 +102,15 @@ export async function POST(req: NextRequest) {
 
 //get all - for admin/ see all new users
 export async function GET(req: NextRequest) {
-  console.log("api/newUsers - get");
   try {
     await connect();
+
     // Extract query params
     const username = req.nextUrl.searchParams.get("username");
-    console.log("api/newUsers - get - username: ", username);
+
     //if search for a specific user
     if (username) {
       const user = await NewUser.find({ username });
-      console.log("api/newUsers - get - user: ", user);
       return NextResponse.json(user || { error: "User not found" });
     }
 
