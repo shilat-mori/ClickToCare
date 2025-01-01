@@ -1,3 +1,3 @@
-export interface TaskFormPageProps{
+export default interface TaskFormPageProps{
     turn_back:()=>void;
 }

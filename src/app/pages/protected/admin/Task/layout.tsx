@@ -1,13 +1,8 @@
 "use client";
 import React, { ReactElement } from "react";
 import { useRouter } from "next/navigation";
-import { TaskFormPageProps } from "@/app/types/TaskFormPageProps";
 
-export default function Layout({
-  children,
-}: {
-  children: ReactElement<TaskFormPageProps>;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   const goBack = () => {

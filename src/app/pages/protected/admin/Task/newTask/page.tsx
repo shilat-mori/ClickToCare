@@ -1,12 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import ITask from "@/app/types/tasks";
 import { useRouter } from "next/navigation";
-import axios from "axios";
-import { TaskFormPageProps } from "@/app/types/TaskFormPageProps";
 import TaskForm from "@/app/components/TaskForm";
 
-const NewTask: React.FC<TaskFormPageProps> = () => {
+const NewTask = () => {
   const router = useRouter();
   const goBack = () => {
     router.push("/pages/protected/publicTasks");
