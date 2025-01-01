@@ -7,15 +7,16 @@ import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const Page = () => {
-  const { id } = useParams(); 
+  const { id } = useParams();
   const [taskToUpdate, setTaskToUpdate] = useState<ITask | null>(null);
-  const router = useRouter()
+  const router = useRouter();
+
   useEffect(() => {
     const getTask = async (taskId: string | string[]) => {
       try {
         const res = await axios.get<ITask>(`/api/tasks/${taskId}`);
         console.log("Response: ", res.data);
-        setTaskToUpdate(res.data); //update new details
+        setTaskToUpdate(res.data); // update state
       } catch (error) {
         console.error("Error fetching task: ", error);
       }
@@ -24,8 +25,6 @@ const Page = () => {
     if (id) {
       getTask(id);
     }
-
-
   }, [id]);
 
   const goBack = () => {
