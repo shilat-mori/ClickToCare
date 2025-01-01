@@ -3,8 +3,10 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
+import AxiosErrorResponse from "@/app/types/forms/axiosErrorResponse";
+import { LoginResponse } from "@/app/types/forms/loginResponse";
 
 const SignUpForm = () => {
   const router = useRouter();
@@ -46,11 +48,10 @@ const SignUpForm = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState("");
-  const [formErrors, setFormErrors] = useState<string[]>([]); // For backend errors
 
   const onSubmit = async (data: INewUser) => {
     setIsSubmitting(true);
-    setFormErrors([]); // Clear previous errors
+    setMessage(""); // Clear previous messages
 
     const formData = new FormData();
     formData.append("username", data.username);
@@ -58,32 +59,31 @@ const SignUpForm = () => {
     formData.append("password", data.password);
     formData.append("faceImage", data.faceImage[0]); // Append the file
     if (data.freeText) formData.append("freeText", data.freeText);
-    console.log(formData.keys());
 
-    console.log("before axios");
-    console.log("Keys:", Array.from(formData.keys()));
     try {
-      const response = await axios.post("/api/newUsers", formData, {
+      const response = await axios.post<LoginResponse>("/api/newUsers", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
       if (response.data.error) {
-        setFormErrors([response.data.error]);
+        setMessage(response.data.error);
       } else {
         console.log("signed successfully");
         router.push("/pages/waiting/");
       }
 
     } catch (error) {
-      console.error("Error signing up", error);
-      setFormErrors(["An error occurred while signing up. Please try again."]);
+      const axiosError = error as AxiosError<AxiosErrorResponse>;
+      if (axiosError.response?.data?.error) {
+        setMessage(axiosError.response.data.error);
+      } else {
+        setMessage("An unexpected error occurred.");
+      }
     }
-
     setIsSubmitting(false);
-
-
   };
+
   return (
     <div className="form-box justify-center">
       <form
@@ -150,14 +150,7 @@ const SignUpForm = () => {
           />
         </div>
 
-        {/* Display backend error messages */}
-        {formErrors.length > 0 && (
-          <div className="error-messages">
-            {formErrors.map((error, index) => (
-              <p key={index} className="error-text">{error}</p>
-            ))}
-          </div>
-        )}
+        <div className="error-message-box">{message}</div>
 
         <button
           className="buttonStyle flex flex-col"
