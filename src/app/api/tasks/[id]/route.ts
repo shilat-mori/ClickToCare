@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import connect from "@/app/lib/db/mongodb";
 import Task from "@/app/lib/models/taskSchema";
-import ITask from "@/app/types/tasks";
-import { string } from "zod";
+import ITask from "@/app/types/tasks/tasks";
 
 // GET - Get task by ID
 export async function GET(

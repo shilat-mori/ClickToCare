@@ -1,7 +1,7 @@
 "use client";
 
-import TaskForm from "@/app/components/TaskForm";
-import ITask from "@/app/types/tasks";
+import TaskForm from "@/app/components/tasks/TaskForm";
+import ITask from "@/app/types/tasks/tasks";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -32,7 +32,7 @@ const Page = () => {
   };
 
   return (
-    <TaskForm turn_back={goBack} mode="update" taskToUpdate={taskToUpdate} />
+    <TaskForm mode="update" taskToUpdate={taskToUpdate} />
   );
 };
 
