@@ -10,17 +10,13 @@ import { UserRole } from "@/app/types/users/userRole";
 export async function POST(req: NextRequest) {
     //connect to mongoDB (the database)
     await connect();
-    const requ = await req
-    console.log("request: ", requ);
 
     const { username, password } = await req.json();
-    console.log("request json: ", username, password);
+    
     try {
         // Check if user exists
         const user = await User.findOne({ username });
         const newUser = await NewUser.findOne({ username });
-        console.log(user);
-        console.log(newUser);
 
         if (!user && !newUser) {
             return NextResponse.json({ error: 'Username does not exist' }, { status: 401 });
