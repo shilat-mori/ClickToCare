@@ -85,7 +85,7 @@ const LogInForm = () => {
           {errors.password && <p className="error-message">{errors.password.message}</p>}
         </div>
 
-        <div className="border-2">{message}</div>
+        <div className="error-message-box">{message}</div>
 
         <button className="buttonStyle flex flex-col" type="submit" disabled={isSubmitting}>
           {isSubmitting ? "Logging..." : "Log In"}
