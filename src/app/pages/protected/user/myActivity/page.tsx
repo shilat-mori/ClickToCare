@@ -3,6 +3,8 @@ import TaskActivityGraph from '@/app/components/userActivityComponents/TaskActiv
 import TasksByDay from '@/app/components/userActivityComponents/taskByDay';
 import React, { useState } from 'react'
 
+//learn code
+ 
 const MyActivity = () => {
   const [type, setType] = useState<"list" | "graph">("list");
   const [time, setTime] = useState<"week" | "month">("week");

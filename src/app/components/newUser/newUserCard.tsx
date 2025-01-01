@@ -3,9 +3,8 @@ import React, { useState, useEffect } from "react";
 import { verifyUser, rejectUser } from "../../services/verifyUser";
 import NewUserCardProps from "../../types/users/newUsers/newUserCardProps";
 import Avatar from "./Avatar";
- 
-const NewUserCard: React.FC<NewUserCardProps> = ({ userInfo, setVerified }) => {
 
+const NewUserCard: React.FC<NewUserCardProps> = ({ userInfo, setVerified }) => {
   return (
     <div className="w-3/4 p-4 m-auto my-8 bg-sky-100 border-sky-500 flex flex-col gap-4 shadow-xl shadow-gray-300 relative min-h-[200px]">
       {/* Avatar placed in the top-right corner */}

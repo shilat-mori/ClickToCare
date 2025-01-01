@@ -27,7 +27,6 @@ const ScoreBoard = () => {
   const maxScore = Math.max(...users.map((user) => user.score || 0));
   return (
     <div>
-      <h1>Score Board:</h1>
       <ul>
         {users.length > 0 ? (
           users.map((user) => (
