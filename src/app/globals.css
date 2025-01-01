@@ -70,3 +70,11 @@ img {
 .red-button {
   @apply btn bg-red-400 px-4 py-2;
 }
+
+.error-message{
+  @apply text-red-600
+}
+
+.error-message-box{
+ @apply bg-red-200 shadow-sm shadow-slate-400
+}
