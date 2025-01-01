@@ -65,24 +65,24 @@ const LogInForm = () => {
   return (
     <div className="form-box">
       <form className="h-full flex flex-col justify-between" onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex">
+        <div className="flex-col">
           <input
             className="form-input"
             placeholder="Username"
             type="text"
             {...register("username")}
           />
-          {errors.username && <p>{errors.username.message}</p>}
+          {errors.username && <p className="error-message">{errors.username.message}</p>}
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex-col">
           <input
             className="form-input"
             placeholder="Password"
             type="password"
             {...register("password")}
           />
-          {errors.password && <p>{errors.password.message}</p>}
+          {errors.password && <p className="error-message">{errors.password.message}</p>}
         </div>
 
         <div className="border-2">{message}</div>
