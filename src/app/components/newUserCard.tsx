@@ -17,7 +17,7 @@ const NewUserCard: React.FC<NewUserCardProps> = ({ userInfo, setVerified }) => {
   }, [userInfo.faceImage]);
 
   return (
-    <div className="w-3/4 p-4 m-auto my-8 bg-sky-100 border-sky-500 flex flex-col gap-4 shadow-xl shadow-gray-300">
+    <div className="box">
       <div className="font-bold text-lg">{userInfo.username}</div>
       <div className="text-lg">email: {userInfo.email}</div>
       <div>About me: </div>

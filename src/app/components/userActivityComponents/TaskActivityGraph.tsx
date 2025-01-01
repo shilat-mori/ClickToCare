@@ -5,6 +5,8 @@ import { getMyTasks } from '@/app/services/getMyTasks';
 import ITask from '@/app/types/tasks';
 import { getUsernameFromCookies } from '@/app/services/frontUtils';
 
+//learn code
+ 
 const TaskActivityGraph = ({ view = 'week' }: { view: 'week' | 'month' }) => {
     const [tasks, setTasks] = useState<ITask[]>([]);
     const [loading, setLoading] = useState(true);

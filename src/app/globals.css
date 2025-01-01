@@ -15,7 +15,18 @@
     transform: scale(1) translateY(0);
   }
 }
-
+.hover-shadow{
+  @apply hover:shadow-md hover:shadow-gray-400
+}
+img {
+  @apply max-w-full max-h-full;
+}
+.box {
+  @apply w-3/4 p-4 m-auto my-8 bg-sky-100 flex flex-col gap-4 shadow-xl shadow-gray-300;
+}
+.btn {
+  @apply text-white p-2 rounded m-2 hover-shadow;
+}
 .action_button {
   @apply text-white p-2 rounded mx-4;
 }
@@ -39,24 +50,17 @@
 .form-box {
   @apply h-full w-80 sticky m-auto  flex flex-col justify-center bg-white p-10 shadow-2xl transform transition-all duration-300;
 }
+
 .form-input {
   @apply w-full p-2 border border-gray-300 rounded;
-}
-
-img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: cover;
 }
 
 .navbar_blocks {
   @apply flex justify-between items-center;
 }
-.btn {
-  @apply text-white p-2 rounded m-2;
-}
+
 .navbar_buttons {
-  @apply btn bg-sky-500 ;
+  @apply btn bg-sky-500;
 }
 
 .blue-button {

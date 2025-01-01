@@ -55,7 +55,6 @@ export async function getUsernameFromCookies(): Promise<string | null> {
         const decoded = decodeJWT(token);
 
         if (decoded && decoded.username) {
-            console.log("Username from cookies:", decoded.username);
             return decoded.username as string;
         }
 

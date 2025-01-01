@@ -1,6 +1,8 @@
 import mongoose, { Model, Schema } from 'mongoose';
 import INewUser from '@/app/types/newUser'; //the interfave for new user
 
+//learn code
+ 
 const NewUserSchema: Schema<INewUser> = new Schema({
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },

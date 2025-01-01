@@ -1,6 +1,6 @@
 import CountdownBlockProps from '@/app/types/countdownBlockProps'
 import React from 'react'
-
+ 
 const CountdownBlock: React.FC<CountdownBlockProps> = ({ name, num }) => {
     return (
         <div className="flex flex-col items-center">
