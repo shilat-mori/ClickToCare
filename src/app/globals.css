@@ -15,8 +15,8 @@
     transform: scale(1) translateY(0);
   }
 }
-.hover-shadow{
-  @apply hover:shadow-md hover:shadow-gray-400
+.hover-shadow {
+  @apply hover:shadow-md hover:shadow-gray-400;
 }
 img {
   @apply max-w-full max-h-full;
@@ -51,7 +51,6 @@ img {
   @apply h-full w-80 sticky m-auto  flex flex-col justify-center bg-white p-10 shadow-2xl transform transition-all duration-300;
 }
 
-
 .form-input {
   @apply w-full p-2 border border-gray-300 rounded;
 }
@@ -72,10 +71,10 @@ img {
   @apply btn bg-red-400 px-4 py-2;
 }
 
-.error-message{
-  @apply text-red-600
+.error-message {
+  @apply text-red-600;
 }
 
-.error-message-box{
- @apply bg-red-200 shadow-sm shadow-slate-400
+.error-message-box {
+  @apply bg-red-200 shadow-sm shadow-slate-400;
 }

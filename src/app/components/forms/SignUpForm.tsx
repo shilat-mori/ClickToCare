@@ -97,7 +97,7 @@ const SignUpForm = () => {
             type="text"
             {...register("username")}
           />
-          {errors.username && <p>{errors.username.message}</p>}
+          {errors.username && <p className="error-message">{errors.username.message}</p>}
         </div>
 
         <div className="flex flex-col">
@@ -107,7 +107,7 @@ const SignUpForm = () => {
             type="email"
             {...register("email")}
           />
-          {errors.email && <p>{errors.email.message}</p>}
+          {errors.email && <p className="error-message">{errors.email.message}</p>}
         </div>
 
         <div className="flex flex-col">
@@ -117,7 +117,7 @@ const SignUpForm = () => {
             type="password"
             {...register("password")}
           />
-          {errors.password && <p>{errors.password.message}</p>}
+          {errors.password && <p className="error-message">{errors.password.message}</p>}
         </div>
         <div className="flex flex-col">
           <input
@@ -126,7 +126,7 @@ const SignUpForm = () => {
             type="password"
             {...register("confirmPassword")}
           />
-          {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
+          {errors.confirmPassword && <p className="error-message">{errors.confirmPassword.message}</p>}
         </div>
         <div className="flex flex-col">
           <input
@@ -138,7 +138,7 @@ const SignUpForm = () => {
           />
           {errors.faceImage?.message &&
             typeof errors.faceImage.message === "string" && (
-              <p>{errors.faceImage.message}</p>
+              <p className="error-message">{errors.faceImage.message}</p>
             )}
         </div>
 

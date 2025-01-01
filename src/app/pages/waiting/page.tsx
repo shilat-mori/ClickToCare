@@ -9,6 +9,27 @@ import { rejectUser } from '@/app/services/verifyUser';
 const Waiting = () => {
   const [signUpUser, setSignUpUser] = useState<INewUser | null>(null);
   const router = useRouter()
+  const signUpDate = signUpUser?.signTime ? new Date(signUpUser.signTime) : null;
+  const rejectDate = signUpUser?.reject_time ? new Date(signUpUser.reject_time) : null;
+  
+
+  // For rejectDate, set the end date to 7 days later at midnight UTC. (when vercel erases it)
+  const rejectEndDate = rejectDate
+    ? (() => {
+      const end = new Date(rejectDate);
+      end.setUTCDate(end.getUTCDate() + 7); // Add 7 days
+      end.setUTCHours(0, 0, 0, 0); // Set to midnight UTC
+      return end;
+    })()
+    : null;
+
+  // For signUpDate, set the end date to exactly 7 days later.
+  const signUpEndDate = signUpDate
+    ? new Date(signUpDate.getTime() + 7 * 24 * 60 * 60 * 1000) // Add 7 days in milliseconds
+    : null;
+
+  const endDate = rejectEndDate || signUpEndDate; //prefer the reject date if exists.
+
   useEffect(() => {
     const fetchData = async () => {
       const user = await getUserSignUp();
@@ -33,30 +54,11 @@ const Waiting = () => {
     //it will be erased automatically around midnight UTC
   };
 
-  const signUpDate = signUpUser?.signTime ? new Date(signUpUser.signTime) : null;
-  const rejectDate = signUpUser?.reject_time ? new Date(signUpUser.reject_time) : null;
-
-  // For rejectDate, set the end date to 7 days later at midnight UTC. (when vercel erases it)
-  const rejectEndDate = rejectDate
-    ? (() => {
-      const end = new Date(rejectDate);
-      end.setUTCDate(end.getUTCDate() + 7); // Add 7 days
-      end.setUTCHours(0, 0, 0, 0); // Set to midnight UTC
-      return end;
-    })()
-    : null;
-
-  // For signUpDate, set the end date to exactly 7 days later.
-  const signUpEndDate = signUpDate
-    ? new Date(signUpDate.getTime() + 7 * 24 * 60 * 60 * 1000) // Add 7 days in milliseconds
-    : null;
-
-  const endDate = rejectEndDate || signUpEndDate; //prefer the reject date if exists.
 
   return (
     <div>
       {signUpUser ? (
-        <div>
+        <div  className={signUpUser.reject_time?'bg-red-300':'bg-blue-300'}>
           <p>Welcome, {signUpUser.username}!</p>
           <p>
             {signUpUser.reject_time
