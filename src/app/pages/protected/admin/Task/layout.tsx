@@ -19,7 +19,7 @@ export default function Layout({
       <button className="btn bg-gray-400" onClick={goBack}>
         Back
       </button>
-      <div>{React.cloneElement(children, { turn_back: goBack })}</div>
+      <div>{children}</div>
     </div>
   );
 }

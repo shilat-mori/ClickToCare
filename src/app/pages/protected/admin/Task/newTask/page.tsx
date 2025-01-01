@@ -6,7 +6,7 @@ import axios from "axios";
 import { TaskFormPageProps } from "@/app/types/TaskFormPageProps";
 import TaskForm from "@/app/components/TaskForm";
 
-const NewTask: React.FC<TaskFormPageProps> = ({ turn_back }) => {
+const NewTask: React.FC<TaskFormPageProps> = () => {
   const router = useRouter();
   const goBack = () => {
     router.push("/pages/protected/publicTasks");

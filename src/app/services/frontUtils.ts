@@ -29,7 +29,6 @@ export async function getUserRoleFromCookies(): Promise<UserRole | null> {
         const decoded = decodeJWT(token);
 
         if (decoded && decoded.role) {
-            console.log("User role from cookies:", decoded.role);
             return decoded.role as UserRole;
         }
 
