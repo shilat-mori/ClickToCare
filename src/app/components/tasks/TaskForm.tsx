@@ -1,15 +1,14 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import ITask from "../types/tasks";
+import ITask from "@/app/types/tasks/tasks";
 import axios, { AxiosError } from "axios";
 
 interface ITaskForm {
   mode: "add" | "update";
   taskToUpdate: ITask | null;
-  turn_back: () => void;
 }
 
-const TaskForm: React.FC<ITaskForm> = ({ mode, taskToUpdate, turn_back }) => {
+const TaskForm: React.FC<ITaskForm> = ({ mode, taskToUpdate }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
@@ -128,7 +127,6 @@ const TaskForm: React.FC<ITaskForm> = ({ mode, taskToUpdate, turn_back }) => {
         try {
           const response = await axios.post("/api/tasks", task);
           console.log("Task successfully submitted:", response.data.name);
-          turn_back();
         } catch (error) {
           console.error("Error submitting a new Task: ", error);
         }
@@ -158,7 +156,6 @@ const TaskForm: React.FC<ITaskForm> = ({ mode, taskToUpdate, turn_back }) => {
           return
         }
       }
-      // turn_back();
     }
   };
 
