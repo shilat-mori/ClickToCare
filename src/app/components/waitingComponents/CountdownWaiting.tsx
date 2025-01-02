@@ -17,7 +17,7 @@ const CountdownWaiting: React.FC<countdownWaitingProps> = ({ endDate, onComplete
       );
     } else {
       return (
-        <div className="flex gap-4 text-center">
+        <div className="flex gap-4 w-fit text-center m-auto animate-beat">
           <CountdownBlock name="Days" num={days} />
           <CountdownBlock name="Hours" num={hours} />
           <CountdownBlock name="Minutes" num={minutes} />
