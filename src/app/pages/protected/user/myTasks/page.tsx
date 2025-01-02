@@ -4,8 +4,6 @@ import ITask from '@/app/types/tasks/tasks';
 import { getMyTasks } from '@/app/services/getMyTasks';
 import TaskCard from '@/app/components/tasks/taskCard';
 import { Assignee } from '@/app/types/tasks/assignee/assignee';
-
-//learn code
  
 const MyTasks = () => {
   const [tasks, setTasks] = useState<ITask[]>([]);
@@ -26,10 +24,6 @@ const MyTasks = () => {
     //if we reached here is to remove self from task - 
     //therefore remove task from my tasks
     setTasks((prevTasks) => prevTasks.filter((task) => task._id !== taskId));
-  };
-
-  const removeTask = (taskId: string) => {
-    setTasks(prev => prev.filter(task => task._id !== taskId));
   };
 
   return (
