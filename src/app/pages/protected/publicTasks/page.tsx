@@ -88,7 +88,7 @@ const PublicTasks = () => {
     //first check if we got to the max assignees
     const maxAssignee = getMaxAssignee(taskId);
     //if so, don't show this task
-    if (maxAssignee !== undefined && updatedAssigned.length >= maxAssignee) {
+    if (maxAssignee !== undefined && updatedAssigned.length >= maxAssignee ) {
       removeTask(taskId);
     } else {
       //otherwise, upadte the assignee list in the card component

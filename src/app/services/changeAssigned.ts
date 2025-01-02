@@ -41,6 +41,7 @@ export const addMe = async (taskId: string) => {
 
         const newAssigned = [...task.assigned, { name: myUsername, assignedAt: new Date() }];
         const response = await axios.put(`/api/tasks/${taskId}`, {
+            ...task,
             assigned: newAssigned
         });
 
@@ -71,6 +72,7 @@ const removeAssigned = async (taskId: string, usernameToRemove: string) => {
 
         // Update the task in the backend
         const response = await axios.put(`/api/tasks/${taskId}`, {
+            ...task,
             assigned: updatedAssigned
         });
 

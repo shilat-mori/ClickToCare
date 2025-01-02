@@ -29,6 +29,10 @@ const MyTasks = () => {
     );
   };
 
+  const removeTask = (taskId: string) => {
+    setTasks(prev => prev.filter(task => task._id !== taskId));
+  };
+
   return (
     <div>
       {loading ? (
@@ -37,7 +41,7 @@ const MyTasks = () => {
         tasks.map((task) => (
           <div key={task._id} className="break-inside-avoid p-4 rounded">
             {/* on delete do nothing - you are the user, you can't delete */}
-            <TaskCard taskInfo={task} setAssigned={setAssigned} onDelete={()=>{}}/>
+            <TaskCard taskInfo={task} setAssigned={setAssigned} onDelete={removeTask}/>
           </div>
         ))
       ) : (
