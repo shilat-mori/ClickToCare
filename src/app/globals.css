@@ -78,3 +78,56 @@ img {
 .error-message-box {
   @apply bg-red-200 shadow-sm shadow-slate-400;
 }
+
+.waiting {
+  @apply absolute bg-blue-200 text-center w-full h-full;
+}
+
+@keyframes colorized {
+  8%,
+  33% {
+    --tw-drop-shadow: drop-shadow(0 0 20px rgba(123, 255, 151, 0.95));
+    filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
+      var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert)
+      var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+  }
+  41%,
+  66% {
+    --tw-drop-shadow: drop-shadow(0 0 20px rgba(255, 255, 59, 0.95));
+    filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
+      var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert)
+      var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+  }
+  75%,
+  100% {
+    --tw-drop-shadow: drop-shadow(0 0 20px rgba(255, 64, 204, 0.934));
+    filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
+      var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert)
+      var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+  }
+}
+.animate-colorized {
+  animation: colorized 3s cubic-bezier(0, 0, 0.8, 1) infinite;
+}
+
+.waiting-message {
+  @apply font-bold animate-colorized;
+}
+
+@keyframes beat {
+  0%,
+  10% {
+    transform: scale(1);
+  }
+  10%,
+  90% {
+    transform: scale(1.2);
+  }
+  90%,
+  100% {
+    transform: scale(1);
+  }
+}
+.animate-beat {
+  animation: beat 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
