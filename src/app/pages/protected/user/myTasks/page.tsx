@@ -4,8 +4,6 @@ import ITask from '@/app/types/tasks/tasks';
 import { getMyTasks } from '@/app/services/getMyTasks';
 import TaskCard from '@/app/components/tasks/taskCard';
 import { Assignee } from '@/app/types/tasks/assignee/assignee';
-
-//learn code
  
 const MyTasks = () => {
   const [tasks, setTasks] = useState<ITask[]>([]);
@@ -22,15 +20,10 @@ const MyTasks = () => {
   }, []);
 
   const setAssigned = (taskId: string, updatedAssigned: Assignee[]) => {
-    setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task._id === taskId ? { ...task, assigned: updatedAssigned } : task
-      )
-    );
-  };
-
-  const removeTask = (taskId: string) => {
-    setTasks(prev => prev.filter(task => task._id !== taskId));
+    //no use to set the local assignee change
+    //if we reached here is to remove self from task - 
+    //therefore remove task from my tasks
+    setTasks((prevTasks) => prevTasks.filter((task) => task._id !== taskId));
   };
 
   return (
@@ -41,7 +34,7 @@ const MyTasks = () => {
         tasks.map((task) => (
           <div key={task._id} className="break-inside-avoid p-4 rounded">
             {/* on delete do nothing - you are the user, you can't delete */}
-            <TaskCard taskInfo={task} setAssigned={setAssigned} onDelete={removeTask}/>
+            <TaskCard taskInfo={task} setAssigned={setAssigned} onDelete={()=>{}}/>
           </div>
         ))
       ) : (

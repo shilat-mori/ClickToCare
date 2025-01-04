@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import connect from "@/app/lib/db/mongodb";
 import Task from "@/app/lib/models/taskSchema";
-import { getStatusFilter } from "@/app/services/auto_delete/oldTasks";
 
 //post - new task
 export async function POST(req: NextRequest) {
@@ -30,6 +29,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: "Error posting a new task" }, { status: 500 });
     }
 };
+
 //get - show tasks
 export async function GET(req: NextRequest) {
     try {
@@ -47,15 +47,17 @@ export async function GET(req: NextRequest) {
             filter.category = category;
 
         // give all user-tasks if user is given
-        if (username){
+        if (username) {
             filter["assigned.name"] = username;
         } else {
             filter.$expr = { $lt: [{ $size: "$assigned" }, "$assigned_max"] };
         }
 
-        // Add status filter using the utility function
-        Object.assign(filter, getStatusFilter(status));
-        console.log("filter: ", filter);
+        //we unly use running or all statuses
+        if (status === "running") {
+            const now = new Date();
+            filter.end_time = { $gt: now };
+        }
 
         // Define sorting criteria
         const sortCriteria: { [key: string]: 'asc' | 'desc' } = {};
