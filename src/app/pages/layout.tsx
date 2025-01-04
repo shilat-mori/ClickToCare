@@ -4,6 +4,8 @@ import { removeToken } from "../services/frontUtils";
 import { useRouter } from 'next/navigation';
 import NavBar from "../components/navBar/navBar";
 import { useHeaderHeight } from "../context/HeaderHeightContext";
+import { LogoMode } from "../types/ILogo";
+import Logo from "../components/Logo";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     const router = useRouter();
@@ -35,7 +37,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         <button onClick={() => router.push('/')}>Home</button>
                         <button onClick={() => setOpenMenu(!openMenu)} className="m-3">≡</button>
                     </div>
-                    <div className="text-2xl font-bold">אמץ משימה</div>
+                    <Logo mode={LogoMode.Avatar}/>
                     <button onClick={handleSignOut} className="bg-red-400 text-white p-2 rounded">
                         Sign Out
                     </button>
