@@ -59,20 +59,30 @@ const Waiting = () => {
   return (
     <div className=" relative w-3/5 h-full py-8 m-auto text-center bg-blue-200 shadow-2xl shadow-blue-400">
       {signUpUser ? (
-        <div className={signUpUser.reject_time ? "bg-red-300" : "waiting"}>
-          <div className="h-1/3">
-            <h2 className="waiting-message text-3xl">Welcome {signUpUser.username}!</h2>
-            <h3 className="waiting-message text-xl">
-              {signUpUser.reject_time
-                ? "You were rejected, and will be deleted in:"
-                : "Answer in:"}
-            </h3>
+        <div className={`flex flex-col p-8 pb-14 ${signUpUser.reject_time ? "bg-red-300 h-1/2 justify-between " : "waiting"}`}>
+          <div className='h-1/3'>
+            {!signUpUser.reject_time ? (
+              <h2 className="waiting-message text-3xl">
+                Welcome {signUpUser.username}!
+              </h2>
+            ) : (
+              <div></div>
+            )}
+            {signUpUser.reject_time ? (
+              <div>
+                <h3 className="text-4xl  text-red-700 font-bold">You were rejected</h3>
+                <h4 className="text-xl text-red-700">and will be deleted in:</h4>
+              </div>
+            ) : (
+              <h3 className="waiting-message text-xl">Answer in:</h3>
+            )}
           </div>
           <div className="h-1/3">
-          <CountdownWaiting
-            endDate={endDate}
-            onComplete={handleCountdownComplete}
-          />
+            <CountdownWaiting
+              endDate={endDate}
+              rejected={Boolean(signUpUser.reject_time)}
+              onComplete={handleCountdownComplete}
+            />
           </div>
         </div>
       ) : (
