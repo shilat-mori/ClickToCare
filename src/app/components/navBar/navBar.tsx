@@ -30,7 +30,7 @@ const NavBar: React.FC<NavbarProps> = ({ handleNavigator }) => {
       )}
 
       {(role === UserRole.admin) && <NavButton text={'Verify Users'} navigation={'/pages/protected/admin/reviewNewUsers'} handleNavigator={handleNavigator} />}
-      {(role === UserRole.admin) && <NavButton text={'Add a Task'} navigation={'/pages/protected/admin/newTask'} handleNavigator={handleNavigator} />}
+      {(role === UserRole.admin) && <NavButton text={'Add a Task'} navigation={'/pages/protected/admin/Task/newTask'} handleNavigator={handleNavigator} />}
       {(role === UserRole.authorized) && <NavButton text={'My Tasks'} navigation={'/pages/protected/user/myTasks'} handleNavigator={handleNavigator} />}
       {(role === UserRole.authorized) && <NavButton text={'My Activity'} navigation={'/pages/protected/user/myActivity'} handleNavigator={handleNavigator} />}
 
