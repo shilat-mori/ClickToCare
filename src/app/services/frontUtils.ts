@@ -1,5 +1,5 @@
 "use client"
-import { UserRole } from "../types/userRole";
+import { UserRole } from "../types/users/userRole";
 
 function decodeJWT(token: string): any | null {
     const parts = token.split('.');
@@ -29,7 +29,6 @@ export async function getUserRoleFromCookies(): Promise<UserRole | null> {
         const decoded = decodeJWT(token);
 
         if (decoded && decoded.role) {
-            console.log("User role from cookies:", decoded.role);
             return decoded.role as UserRole;
         }
 
@@ -55,7 +54,6 @@ export async function getUsernameFromCookies(): Promise<string | null> {
         const decoded = decodeJWT(token);
 
         if (decoded && decoded.username) {
-            console.log("Username from cookies:", decoded.username);
             return decoded.username as string;
         }
 
@@ -67,7 +65,7 @@ export async function getUsernameFromCookies(): Promise<string | null> {
     }
 };
 
-//remove token - for debugging?
+//remove token
 export const removeToken = () => {
     // Set the cookie with an expired date to delete it
     document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";

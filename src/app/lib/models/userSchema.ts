@@ -1,6 +1,6 @@
 import mongoose, {Model, Schema} from 'mongoose';
-import IUser from '@/app/types/users';
-import { UserRole } from '@/app/types/userRole';
+import IUser from '@/app/types/users/users';
+import { UserRole } from '@/app/types/users/userRole';
 
 const UserSchema: Schema<IUser> = new Schema({
   username: { type: String, required: true, unique: true },

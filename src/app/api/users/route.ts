@@ -2,45 +2,32 @@ import { NextRequest, NextResponse } from "next/server";
 import connect from "@/app/lib/db/mongodb";
 import User from "@/app/lib/models/userSchema";
 import { generateToken } from "../../lib/tokenUtil";
-import { UserRole } from "@/app/types/userRole";
+import { UserRole } from "@/app/types/users/userRole";
 import bcrypt from 'bcryptjs';
 import { SortOrder } from "mongoose";
 
-//add a new user - signUp
+//add a new user - when admin verifies the new user to regular user
 export async function POST(req: NextRequest) {
     try {
         //connect to mongoDB (the database)
         await connect();
         //get the user data
-        const { username, password, email } = await req.json();
-        // Check if the email already exists
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
-            return NextResponse.json({ error: "Email already exists" }, { status: 409 });
-        }
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const user = await req.json();
         //create the new user and save to database
-        const newUser = new User({ username, password: hashedPassword, email, role: UserRole.unauthorized, score: 0 });
+        const newUser = new User({
+            username: user.username,
+            email: user.email,
+            password: user.password,
+            role: UserRole.authorized,
+            score: 0
+        }); //about me, face image and signUp time aren't needed
         await newUser.save();
-        //generate a token - unauthorized, since we just signed up
-        const token = await generateToken(newUser.username, UserRole.unauthorized);
-        // Set the token in a cookie
-        const response = NextResponse.json({ message: "User created successfully", user: newUser });
-        response.cookies.set("token", token, {
-            httpOnly: false, //for debugging, later change to true
-            sameSite: 'lax', // Allows cookies on same-site navigation - also for debugging
-            secure: process.env.NODE_ENV === "production",
-            path: "/",
-            maxAge: 60 * 60, // 1 hour
-        });
-
-        return response;
+        return NextResponse.json({ message: "User added successfully", user: newUser });
     } catch (error) {
-        return NextResponse.json("Error in creating user " + error);
+        return NextResponse.json({ error: "Error in adding user " + error });
     }
 };
 
-//get all users - used to verify login, and for the admin to get all unathorized users
 //sort - for score board 
 export async function GET(req: NextRequest) {
     try {
@@ -49,7 +36,7 @@ export async function GET(req: NextRequest) {
         const role = req.nextUrl.searchParams.get('role') || '';
         const filter = role ? { role } : {};
         const sortCriteria: { score: SortOrder } = { score: 'desc' };
-        
+
         const users = await User.find(filter).sort(sortCriteria);
         return NextResponse.json(users);
     } catch (error) {
@@ -63,8 +50,6 @@ export async function PUT(req: NextRequest) {
         await connect();
         const { username, addition } = await req.json();
 
-        console.log(`PUT on api/users/ - username: ${username}, addition: ${addition}`);
-
         if (!username) {
             return NextResponse.json({ error: "Username is required" }, { status: 400 });
         }
@@ -74,11 +59,14 @@ export async function PUT(req: NextRequest) {
             return NextResponse.json({ error: "User not found" }, { status: 404 });
         }
 
+
         // Update the score
         user.score += addition;
+
+
         await user.save();
-        return NextResponse.json({ message: "User score updated successfully", user });
+        return NextResponse.json({ message: "User updated successfully", user });
     } catch (error) {
-        return NextResponse.json({ error: "Error in updating user score " + error });
+        return NextResponse.json({ error: "Error in updating user " + error });
     }
 };

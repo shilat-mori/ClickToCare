@@ -1,6 +1,6 @@
 "use client"
 import axios from "axios"
-import ITask from "../types/tasks";
+import ITask from "../types/tasks/tasks";
 import { getUsernameFromCookies } from "./frontUtils";
 
 export const getMyTasks = async () => {

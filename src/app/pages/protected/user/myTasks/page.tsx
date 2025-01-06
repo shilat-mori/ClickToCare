@@ -1,9 +1,10 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import ITask from '@/app/types/tasks';
+import ITask from '@/app/types/tasks/tasks';
 import { getMyTasks } from '@/app/services/getMyTasks';
-import TaskCard from '@/app/components/taskCard';
-
+import TaskCard from '@/app/components/tasks/taskCard';
+import { Assignee } from '@/app/types/tasks/assignee/assignee';
+ 
 const MyTasks = () => {
   const [tasks, setTasks] = useState<ITask[]>([]);
   const [loading, setLoading] = useState(true);
@@ -18,12 +19,11 @@ const MyTasks = () => {
     fetchTasks();
   }, []);
 
-  const setAssigned = (taskId: string, updatedAssigned: string[]) => {
-    setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task._id === taskId ? { ...task, assigned: updatedAssigned } : task
-      )
-    );
+  const setAssigned = (taskId: string, updatedAssigned: Assignee[]) => {
+    //no use to set the local assignee change
+    //if we reached here is to remove self from task - 
+    //therefore remove task from my tasks
+    setTasks((prevTasks) => prevTasks.filter((task) => task._id !== taskId));
   };
 
   return (
@@ -33,7 +33,8 @@ const MyTasks = () => {
       ) : tasks.length > 0 ? (
         tasks.map((task) => (
           <div key={task._id} className="break-inside-avoid p-4 rounded">
-            <TaskCard taskInfo={task} setAssigned={setAssigned} />
+            {/* on delete do nothing - you are the user, you can't delete */}
+            <TaskCard taskInfo={task} setAssigned={setAssigned} onDelete={()=>{}}/>
           </div>
         ))
       ) : (

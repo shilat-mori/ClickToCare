@@ -8,8 +8,8 @@ export async function POST(req: NextRequest) {
         //connect to mongoDB (the database)
         await connect();
         //get the user data
-        const { name, description, category, points, assigned, creation_time, end_time } = await req.json();
-        if (!name || !description || !category || points <= 0 || !end_time) {
+        const { name, description, category, points, assigned_max, creation_time, end_time } = await req.json();
+        if (!name || !description || !category || points <= 0 || assigned_max <= 0 || !end_time) {
             return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
         }
         const newTask = new Task({
@@ -17,9 +17,10 @@ export async function POST(req: NextRequest) {
             description,
             category,
             points,
-            assigned,
-            creation_time: new Date(creation_time),
-            end_time: new Date(end_time),
+            assigned: [],
+            assigned_max,
+            creation_time: new Date(creation_time).toISOString(), //save as ISO format in UTC
+            end_time: new Date(end_time).toISOString(),
         });
         await newTask.save();
         return NextResponse.json({ message: "Task created successfully", task: newTask });
@@ -28,6 +29,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: "Error posting a new task" }, { status: 500 });
     }
 };
+
 //get - show tasks
 export async function GET(req: NextRequest) {
     try {
@@ -37,17 +39,27 @@ export async function GET(req: NextRequest) {
         const sortBy = req.nextUrl.searchParams.get('sortBy');
         const order: 'asc' | 'desc' = req.nextUrl.searchParams.get('order') === 'desc' ? 'desc' : 'asc';
         const username = req.nextUrl.searchParams.get('username') || '';
+        const status = req.nextUrl.searchParams.get('status') || 'all';
+
+        // Create filter
+        const filter: { [key: string]: any } = {};
+        if (category)
+            filter.category = category;
 
         // give all user-tasks if user is given
         if (username) {
-            const tasks = await Task.find({ assigned: { $in: [username] } });
-            return NextResponse.json(tasks);
+            filter["assigned.name"] = username;
+        } else {
+            filter.$expr = { $lt: [{ $size: "$assigned" }, "$assigned_max"] };
         }
 
-        // otherwise - give all tasks based on filer, and sorted:
-        // Create filter
-        const filter = category ? { category } : {};
-        // Define sorting priority
+        //we unly use running or all statuses
+        if (status === "running") {
+            const now = new Date();
+            filter.end_time = { $gt: now };
+        }
+
+        // Define sorting criteria
         const sortCriteria: { [key: string]: 'asc' | 'desc' } = {};
         if (sortBy) {
             sortCriteria[sortBy] = order; // Custom sort

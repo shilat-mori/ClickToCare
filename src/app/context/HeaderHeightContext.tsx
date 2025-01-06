@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
+//learn code
+ 
 interface HeaderHeightContextType {
   headerHeight: number;
   setHeaderHeight: (height: number) => void;
